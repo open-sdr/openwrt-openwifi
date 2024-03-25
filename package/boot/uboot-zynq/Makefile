@@ -45,11 +45,18 @@ define U-Boot/zybo_z7
   BUILD_DEVICES:=digilent_zynq-zybo-z7
 endef
 
+define U-Boot/adrv9361
+  NAME :=Analog Devices adrv9361z7035
+  BUILD_DEVICES:=analog_devices_zynq-adrv9361
+endef
+
 UBOOT_TARGETS := \
 	zc702 \
 	zed \
 	zybo \
-	zybo_z7
+	zybo_z7 \
+	adrv9361
+
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(STAGING_DIR_IMAGE)
