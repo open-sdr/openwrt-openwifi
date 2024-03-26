@@ -1,4 +1,5 @@
-Subject: [PATCH] ADRV9361 Support: Fixes to defconfig and devicetree
+Subject: [PATCH] ADRV9361 Support: Fix ethernet-phy missing
+ADRV9361 Support: Fixes to defconfig and devicetree
 ADRV9361 Support: Added ps7_init_gpl files
 ADRV9361 Support: Update and rename default configs and devicetrees
 ---
@@ -27,8 +28,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-adrv9361.dts b/arch/arm/dts/zynq-adrv9361.dts
 new file mode 100644
---- /dev/null	(revision 75eb66cb791e32f8327b84053d878d272538ce92)
-+++ b/arch/arm/dts/zynq-adrv9361.dts	(revision 75eb66cb791e32f8327b84053d878d272538ce92)
+--- /dev/null	(revision e5a2b568263b339d481afa358c7391c64cc09d44)
++++ b/arch/arm/dts/zynq-adrv9361.dts	(revision e5a2b568263b339d481afa358c7391c64cc09d44)
 @@ -0,0 +1,101 @@
 +/*
 + * Analog Devices Inc. ADRV9361-Z7035 board DTS
@@ -72,8 +73,8 @@ new file mode 100644
 +	phy-mode = "rgmii-id";
 +	phy-handle = <&ethernet_phy>;
 +
-+	ethernet_phy: ethernet-phy@7 {
-+		reg = <7>;
++	ethernet_phy: ethernet-phy@0 {
++		reg = <0>;
 +	};
 +};
 +
