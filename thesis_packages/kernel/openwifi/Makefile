@@ -41,7 +41,8 @@ define KernelPackage/openwifi
 		+inject_80211 \
 		+side_ch_ctl \
 		+hostapd \
-		+webfsd
+		+webfsd \
+		+uboot-envtools
 	PROVIDES:=kmod-openwifi
 	FILES:=\
 		$(DRIVER_DIR)/openofdm_tx/openofdm_tx.ko \
@@ -156,6 +157,12 @@ define Build/Compile
 	$(call Build/Compile/sdrctl)
 	$(call Build/Compile/inject_80211)
 	$(call Build/Compile/side_ch_ctl)
+endef
+
+# Install the uEnv to auto load the bitstream + OS
+BOARD_NAME:=$(subst DEVICE_,,$(PROFILE))
+define Build/InstallDev
+	$(CP) -f ./files/uEnv-openwifi.txt $(STAGING_DIR_IMAGE)/$(BOARD_NAME)-uEnv.txt
 endef
 
 # Copy the openwifi sources to the board, since user_space scripts necessary to play with the sdr

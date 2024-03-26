@@ -44,6 +44,18 @@ define Device/FitImageGzip
 endef
 
 #################################################
+# Package specific DTS
+#################################################
+
+# Use the DTS file provided by OpenWiFi
+define Setup/OpenWiFi
+	ifeq ($(CONFIG_PACKAGE_kmod-openwifi),y)
+		DEVICE_DTS := devicetree
+		DTS_DIR := $(PKG_BUILD_DIR)/openwifi/openwifi/kernel_boot/boards/$$(DEVICE_MODEL)
+	endif
+endef
+
+#################################################
 # Devices
 #################################################
 
@@ -79,9 +91,12 @@ TARGET_DEVICES += xlnx_zynq-zc702
 define Device/analog_devices_zynq-adrv9361
 	$(call Device/FitImageGzip)
 	DEVICE_VENDOR := Analog Devices
-	DEVICE_MODEL := ADRV9361Z7035
+	DEVICE_MODEL := adrv9361z7035
 	DTS_DIR := ../dts
+	$(Setup/OpenWiFi)
 endef
 TARGET_DEVICES += analog_devices_zynq-adrv9361
+
+
 
 $(eval $(call BuildImage))

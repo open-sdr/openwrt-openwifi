@@ -1,0 +1,14 @@
+devtype=mmc
+bootpart=0:1
+
+bit_file=system_top.bit
+bit_loadaddr=0x2000000
+
+kernel_file=fit.itb
+kernel_loadaddr=0x1000000
+
+bootargs=console=ttyPS0,115200n8 root=/dev/mmcblk0p2 rootwait earlyprintk
+bootcmd=load $devtype $bootpart $bit_loadaddr $bit_file; \
+	fpga loadb 0 $bit_loadaddr $filesize; \
+	load $devtype $bootpart $kernel_loadaddr $kernel_file; \
+	bootm $kernel_loadaddr
