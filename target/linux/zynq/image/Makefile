@@ -76,4 +76,12 @@ define Device/xlnx_zynq-zc702
 endef
 TARGET_DEVICES += xlnx_zynq-zc702
 
+define Device/analog_devices_zynq-adrv9361
+	$(call Device/FitImageGzip)
+	DEVICE_VENDOR := Analog Devices
+	DEVICE_MODEL := ADRV9361Z7035
+	DTS_DIR := ../dts
+endef
+TARGET_DEVICES += analog_devices_zynq-adrv9361
+
 $(eval $(call BuildImage))
