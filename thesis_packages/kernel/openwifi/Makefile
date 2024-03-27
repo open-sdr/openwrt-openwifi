@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=openwifi
-PKG_RELEASE:=5
+PKG_RELEASE:=1
 
 PKG_LICENSE:=AGPLv3
 PKG_LICENSE_FILES:=
@@ -31,8 +31,8 @@ define KernelPackage/openwifi
 	SUBMENU:=Wireless Drivers
 	TITLE:=Driver for openwifi
 	DEPENDS:= \
+		@TARGET_zynq \
 		+kmod-mac80211 \
-		+kmod-adi_non-mainline_common \
 		+kmod-ad9361 \
 		+kmod-cf_axi_dds \
 		+wget-ssl \
@@ -96,7 +96,6 @@ NOSTDINC_FLAGS := \
 ifdef CONFIG_PACKAGE_MAC80211_DEBUGFS
 	NOSTDINC_FLAGS += -DCPTCFG_MAC80211_DEBUGFS
 endif
-
 
 define Build/Prepare
 	cd $(PKG_BUILD_DIR) && git clone --branch $(OPENWIFI_BRANCH) $(OPENWIFI_GITHUB_REPO) $(PKG_NAME)

@@ -1,10 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=xilinx-vdma
-PKG_RELEASE:=5
-
-PKG_LICENSE:=AGPLv3
-PKG_LICENSE_FILES:=
+PKG_RELEASE:=1
 
 PKG_MAINTAINER:=Robbe Gaeremynck <robbe.gaeremynck@outlook.com>
 PKG_BUILD_PARALLEL:=1
