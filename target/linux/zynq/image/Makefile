@@ -8,6 +8,10 @@ include $(INCLUDE_DIR)/image.mk
 FAT32_BLOCK_SIZE=1024
 FAT32_BLOCKS=$(shell echo $$(($(CONFIG_TARGET_KERNEL_PARTSIZE)*1024*1024/$(FAT32_BLOCK_SIZE))))
 
+ifdef CONFIG_PACKAGE_kmod-openwifi
+	CONFIG_TARGET_KERNEL_PARTSIZE:=32
+endif
+
 define Build/zynq-sdcard
 	rm -f $@.boot
 	mkfs.fat $@.boot -C $(FAT32_BLOCKS)
