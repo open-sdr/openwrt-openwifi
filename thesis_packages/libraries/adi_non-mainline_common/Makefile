@@ -3,33 +3,26 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=adi_non-mainline_common
 PKG_RELEASE:=1
 
+PKG_SOURCE_URL:=https://github.com/analogdevicesinc/linux.git
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_VERSION:=adi-5.15.0
+PKG_MIRROR_HASH:=95ca68ae13c0a6e514d36046cfe9218f
+
 PKG_MAINTAINER:=Robbe Gaeremynck <robbe.gaeremynck@outlook.com>
-PKG_BUILD_PARALLEL:=1
 
-REPO_NAME:=adi_linux
-GIT_REPO:=https://github.com/analogdevicesinc/linux.git
-GIT_BRANCH:=adi-5.15.0
-
-include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/kernel.mk
 
-ADI_DIR:=$(PKG_BUILD_DIR)/$(REPO_NAME)
+ADI_DIR:=$(PKG_BUILD_DIR)
 
-define KernelPackage/adi_non-mainline_common
-	SUBMENU:=Libraries
+define Package/adi_non-mainline_common
+	SECTION:=libs
+	CATEGORY:=Libraries
 	TITLE:=Provides ADI specific linux kernel source (Experimental)
-	PROVIDES:=kmod-adi_non-mainline_common
+	URL:=https://github.com/analogdevicesinc/linux
 endef
-	
-# Build with remote sources
-# define Build/Prepare
-# 	$(if $(wildcard $(ADI_DIR)), ,cd $(PKG_BUILD_DIR) && git clone --branch $(GIT_BRANCH) $(GIT_REPO) $(REPO_NAME))
-# endef
 
-define Build/Prepare
-	rm -rf $(ADI_DIR)
-	cp -rf /workdir/adi_linux $(ADI_DIR)
-
+define Build/Configure
 	cp -f $(ADI_DIR)/include/linux/clk/clkscale.h $(LINUX_DIR)/include/linux/clk/clkscale.h
 
 	mkdir -p $(LINUX_DIR)/include/linux/jesd204
@@ -64,4 +57,8 @@ define Build/Compile
 
 endef
 
-$(eval $(call KernelPackage,adi_non-mainline_common))
+define Package/adi_non-mainline_common/install
+	:
+endef
+
+$(eval $(call BuildPackage,adi_non-mainline_common))

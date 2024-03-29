@@ -21,8 +21,9 @@ OPENWIFI_DIR:=$(PKG_BUILD_DIR)/$(PKG_NAME)
 DRIVER_DIR:=$(OPENWIFI_DIR)/driver
 
 # Directory to the adi_non-mainline_common dependency
-ADI_NAME:=adi_non-mainline_common/adi_linux
-ADI_NON-MAINLINE_DIR:=$(PKG_BUILD_DIR)/../$(ADI_NAME)
+ADI_VERSION:=adi-5.15
+ADI_NAME:=adi_non-mainline_common
+ADI_NON-MAINLINE_DIR:=$(BUILD_DIR)/$(ADI_NAME)-$(ADI_VERSION)
 
 # incl_fix_path fixes the include structure that is different
 incl_fix_path:=$(ADI_NON-MAINLINE_DIR)/drivers/include_fix

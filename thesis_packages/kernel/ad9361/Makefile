@@ -9,15 +9,16 @@ PKG_BUILD_PARALLEL:=1
 include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/package.mk
 
-ADI_NAME:=adi_non-mainline_common/adi_linux
-ADI_NON-MAINLINE_DIR:=$(PKG_BUILD_DIR)/../$(ADI_NAME)
+ADI_VERSION:=adi-5.15
+ADI_NAME:=adi_non-mainline_common
+ADI_NON-MAINLINE_DIR:=$(BUILD_DIR)/$(ADI_NAME)-$(ADI_VERSION)
 subdir:=drivers/iio/adc
 
 define KernelPackage/ad9361
 	SUBMENU:=Industrial I/O Modules
 	TITLE:=Analog Devices AD9361 ADC driver
 	PROVIDES:=kmod-ad9361
-	DEPENDS:=+kmod-adi_non-mainline_common \
+	DEPENDS:=+adi_non-mainline_common \
 			 +kmod-cf_axi_adc
 	FILES:=$(ADI_NON-MAINLINE_DIR)/$(subdir)/ad9361_drv.ko
 endef
