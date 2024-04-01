@@ -15,12 +15,8 @@ include $(INCLUDE_DIR)/kernel.mk
 
 ADI_DIR:=$(PKG_BUILD_DIR)
 
-define Package/adi_non-mainline_common
-	SECTION:=libs
-	CATEGORY:=Libraries
-	TITLE:=Provides ADI specific linux kernel source (Experimental)
-	URL:=https://github.com/analogdevicesinc/linux
-endef
+OPENWIFI_REVISION:=061c9ffac699c79637f0c2b3904699a90bf38ab8
+OPENWIFI_GITHUB_URL:=https://raw.githubusercontent.com/open-sdr/openwifi/$(OPENWIFI_REVISION)
 
 define Build/Configure
 	cp -f $(ADI_DIR)/include/linux/clk/clkscale.h $(LINUX_DIR)/include/linux/clk/clkscale.h
@@ -53,12 +49,71 @@ define Build/Configure
 	cp -f $(ADI_DIR)/include/uapi/linux/iio/types.h $(LINUX_DIR)/include/uapi/linux/iio/types.h
 endef
 
+define Build/Prepare
+	$(call Build/Prepare/Default)
+	$(call Build/ad9361/Prepare)
+endef
+
+# --- IIO/ADC DRIVERS
+iio_adc_subdir:=drivers/iio/adc
+PKG_EXTMOD_SUBDIRS += $(iio_adc_subdir)
+#
+#	AD9361 ADC driver
+#
+define KernelPackage/ad9361
+	SUBMENU:=Industrial I/O Modules
+	TITLE:=Analog Devices AD9361 ADC driver
+	DEPENDS:=+kmod-cf_axi_adc
+	FILES:=$(ADI_DIR)/$(iio_adc_subdir)/ad9361_drv.ko
+endef
+adi-$(CONFIG_PACKAGE_kmod-ad9361)+= CONFIG_AD9361=m
+NOSTDINC_FLAGS-$(CONFIG_PACKAGE_kmod-ad9361)+=-DCONFIG_CF_AXI_ADC
+
+# If OpenWiFi will be build, patches should be applied
+define Build/ad9361/Prepare
+	cd $(ADI_DIR) && \
+	wget $(OPENWIFI_GITHUB_URL)/kernel_boot/ad9361.patch && \
+	wget $(OPENWIFI_GITHUB_URL)/kernel_boot/ad9361_conv.patch && \
+	git apply ad9361.patch && \
+	git apply ad9361_conv.patch
+endef
+
+#
+#	CF_AXI_ADC driver
+#
+define KernelPackage/cf_axi_adc
+	SUBMENU:=Industrial I/O Modules
+	TITLE:=cf_axi_adc
+	FILES:=$(ADI_DIR)/$(iio_adc_subdir)/cf_axi_adc.ko
+	KCONFIG:=CONFIG_IIO_BUFFER_DMAENGINE=y
+endef
+adi-$(CONFIG_PACKAGE_kmod-cf_axi_adc)+= CONFIG_CF_AXI_ADC=m
+
+# --- IIO/FREQUENCY DRIVERS
+iio_frequency_subdir:=drivers/iio/frequency
+PKG_EXTMOD_SUBDIRS += $(iio_frequency_subdir)
+#
+#	CF_AXI_DDS driver
+#
+define KernelPackage/cf_axi_dds
+	SUBMENU:=Industrial I/O Modules
+	TITLE:=cf_axi_dds
+	FILES:=$(ADI_DIR)/$(iio_frequency_subdir)/cf_axi_dds_drv.ko
+	KCONFIG:=CONFIG_IIO_BUFFER_DMAENGINE=y
+endef
+adi-$(CONFIG_PACKAGE_kmod-cf_axi_dds)+= CONFIG_CF_AXI_DDS=m
+
+
+CT_MAKEDEFS:=$(adi-y)
+NOSTDINC_FLAGS:=$(NOSTDINC_FLAGS-y)
 define Build/Compile
-
+	echo "DEBUG THESIS ADI NON MAINLINE COMMON"
+	echo $(adi-y)
+	echo $(CT_MAKEDEFS)
+	+$(KERNEL_MAKE) $(CT_MAKEDEFS) M=$(ADI_DIR)/$(iio_adc_subdir) NOSTDINC_FLAGS="$(NOSTDINC_FLAGS)" modules
+	+$(KERNEL_MAKE) $(CT_MAKEDEFS) M=$(ADI_DIR)/$(iio_frequency_subdir) NOSTDINC_FLAGS="$(NOSTDINC_FLAGS)" modules
 endef
 
-define Package/adi_non-mainline_common/install
-	:
-endef
-
-$(eval $(call BuildPackage,adi_non-mainline_common))
+$(eval $(call KernelPackage,ad9361))
+$(eval $(call KernelPackage,cf_axi_adc))
+$(eval $(call KernelPackage,cf_axi_dds))

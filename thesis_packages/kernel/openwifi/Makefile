@@ -44,7 +44,6 @@ define KernelPackage/openwifi
 		+hostapd \
 		+webfsd \
 		+uboot-envtools
-	PROVIDES:=kmod-openwifi
 	FILES:=\
 		$(DRIVER_DIR)/openofdm_tx/openofdm_tx.ko \
 		$(DRIVER_DIR)/openofdm_rx/openofdm_rx.ko \
@@ -106,10 +105,6 @@ define Build/Prepare
 	touch $(DRIVER_DIR)/pre_def.h
 	cd $(DRIVER_DIR) && \
 	echo "#define GIT_REV 0x"$(OPENWIFI_REVISION) > git_rev.h
-
-	cd $(OPENWIFI_DIR)/kernel_boot && \
-	git apply -p $(ADI_NON-MAINLINE_DIR) ad9361.patch && \
-	git apply -p $(ADI_NON-MAINLINE_DIR) ad9361_conv.patch
 
 	# Download the OpenWiFi webserver video
 	cd $(OPENWIFI_DIR)/user_space/webserver && \

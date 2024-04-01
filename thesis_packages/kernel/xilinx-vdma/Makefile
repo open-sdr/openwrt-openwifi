@@ -13,7 +13,6 @@ define KernelPackage/xilinx-vdma
 	SUBMENU:=Wireless Drivers
 	TITLE:=Driver for xilinx-vdma
 	KCONFIG:=CONFIG_XILINX_DMA=m
-	PROVIDES:=kmod-xilinx-vdma
 	FILES:=$(LINUX_DIR)/drivers/dma/xilinx/xilinx_dma.ko
 endef
 
