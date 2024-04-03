@@ -52,6 +52,8 @@ define KernelPackage/openwifi
 		$(DRIVER_DIR)/xpu/xpu.ko \
 		$(DRIVER_DIR)/side_ch/side_ch.ko \
 		$(DRIVER_DIR)/sdr.ko
+	AUTOLOAD:=$(call AutoProbe,mac80211 sdr)
+	MENU:=1
 endef
 
 define Package/sdrctl
@@ -77,6 +79,20 @@ endef
 
 define KernelPackage/openwifi/config
 	select PACKAGE_CFG80211_TESTMODE
+	select ZYNQ_BITSTREAM_BOOTFS
+	if PACKAGE_kmod-openwifi
+		config OPENWIFI_DEFAULT_BITSTREAM
+			bool "Let OpenWiFi choose the bitstream"
+			default y
+		if !OPENWIFI_DEFAULT_BITSTREAM
+			config OPENWIFI_BITSTREAM_FILE
+				string "Enter bitstream path"
+				default "bitstreams/system_top.bit"
+				help
+					This specifies the path to the bitstream.
+					It is relative to the files folder in the package directory.
+		endif
+	endif
 endef
 
 CT_MAKEDEFS:=
@@ -104,7 +120,7 @@ define Build/Prepare
 	mkdir -p $(incl_fix_path)
 	touch $(DRIVER_DIR)/pre_def.h
 	cd $(DRIVER_DIR) && \
-	echo "#define GIT_REV 0x"$(OPENWIFI_REVISION) > git_rev.h
+	echo "#define GIT_REV 0x$(OPENWIFI_REVISION)" > git_rev.h
 
 	# Download the OpenWiFi webserver video
 	cd $(OPENWIFI_DIR)/user_space/webserver && \
@@ -155,9 +171,16 @@ define Build/Compile
 endef
 
 # Install the uEnv to auto load the bitstream + OS
-BOARD_NAME:=$(subst DEVICE_,,$(PROFILE))
+BOARD_NAME:=$(lastword $(subst -, ,$(PROFILE)))
+BITSTREAM_PATH:=./files/bitstreams/$(BOARD_NAME)/$(BOARD_NAME)-v3.1.bit
+ifdef !CONFIG_OPENWIFI_DEFAULT_BITSTREAM
+	BITSTREAM_PATH:=OPENWIFI_BITSTREAM_FILE
+endif
+
+BUILD_DEVICE:=$(subst DEVICE_,,$(PROFILE))
 define Build/InstallDev
-	$(CP) -f ./files/uEnv-openwifi.txt $(STAGING_DIR_IMAGE)/$(BOARD_NAME)-uEnv.txt
+	$(CP) -f ./files/uEnv-openwifi.txt $(STAGING_DIR_IMAGE)/$(BUILD_DEVICE)-uEnv.txt
+	$(CP) -f $(BITSTREAM_PATH) $(STAGING_DIR_IMAGE)/$(BUILD_DEVICE)-system_top.bit
 endef
 
 # Copy the openwifi sources to the board, since user_space scripts necessary to play with the sdr
