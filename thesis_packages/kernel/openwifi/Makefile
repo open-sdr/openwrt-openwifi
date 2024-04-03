@@ -38,12 +38,11 @@ define KernelPackage/openwifi
 		+kmod-cf_axi_dds \
 		+wget-ssl \
 		+kmod-xilinx-vdma \
-		+sdrctl \
-		+inject_80211 \
-		+side_ch_ctl \
 		+hostapd \
 		+webfsd \
-		+uboot-envtools
+		+uboot-envtools \
+		+libnl \
+		+libpcap
 	FILES:=\
 		$(DRIVER_DIR)/openofdm_tx/openofdm_tx.ko \
 		$(DRIVER_DIR)/openofdm_rx/openofdm_rx.ko \
@@ -52,7 +51,6 @@ define KernelPackage/openwifi
 		$(DRIVER_DIR)/xpu/xpu.ko \
 		$(DRIVER_DIR)/side_ch/side_ch.ko \
 		$(DRIVER_DIR)/sdr.ko
-	AUTOLOAD:=$(call AutoProbe,mac80211 sdr)
 	MENU:=1
 endef
 
@@ -60,20 +58,21 @@ define Package/sdrctl
 	SECTION:=tools
 	CATEGORY:=Tools
 	TITLE:=sdrctl tool for OpenWiFi
-	DEPENDS:=+libnl
+	DEPENDS:=kmod-openwifi +libnl
 endef
 
 define Package/inject_80211
 	SECTION:=tools
 	CATEGORY:=Tools
 	TITLE:=inject80211 tool for OpenWiFi
-	DEPENDS:=+libpcap
+	DEPENDS:=kmod-openwifi +libpcap
 endef
 
 define Package/side_ch_ctl
 	SECTION:=tools
 	CATEGORY:=Tools
 	TITLE:=side_ch_ctl tool for OpenWiFi
+	DEPENDS:=kmod-openwifi
 endef
 
 
@@ -81,16 +80,37 @@ define KernelPackage/openwifi/config
 	select PACKAGE_CFG80211_TESTMODE
 	select ZYNQ_BITSTREAM_BOOTFS
 	if PACKAGE_kmod-openwifi
+		menu "User space programs"
+			config PACKAGE_side_ch_ctl
+				bool "side_ch_ctl tool for OpenWiFi"
+				default y
+			config PACKAGE_inject_80211
+				bool "inject_80211 tool for OpenWiFi"
+				default y
+			config PACKAGE_sdrctl
+				bool "sdrctl tool for OpenWiFi"
+				default y
+		endmenu
+
+		config OPENWIFI_DEFAULT_DTS
+			bool "Let OpenWiFi choose the DTS file"
+			default y
+		if !OPENWIFI_DEFAULT_DTS
+			config OPENWIFI_DTS_FILENAME
+				string "DTS filename without .dts"
+				default "devicetree"
+			config OPENWIFI_DTS_FOLDER
+				string "Enter DTS path"
+				default "."
+		endif
+
 		config OPENWIFI_DEFAULT_BITSTREAM
 			bool "Let OpenWiFi choose the bitstream"
 			default y
 		if !OPENWIFI_DEFAULT_BITSTREAM
 			config OPENWIFI_BITSTREAM_FILE
-				string "Enter bitstream path"
+				string "Path to bitstream"
 				default "bitstreams/system_top.bit"
-				help
-					This specifies the path to the bitstream.
-					It is relative to the files folder in the package directory.
 		endif
 	endif
 endef
@@ -150,24 +170,26 @@ endef
 
 SDRCTL_SRC_PATH:=user_space/sdrctl_src
 define Build/Compile/sdrctl
-	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(SDRCTL_SRC_PATH) $(MAKE_FLAGS)
+	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(SDRCTL_SRC_PATH) $(MAKE_FLAGS);
 endef
 
 INJECT_80211_SRC_PATH:=user_space/inject_80211
 define Build/Compile/inject_80211
-	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(INJECT_80211_SRC_PATH) $(MAKE_FLAGS) INC_FLAGS="-I$(STAGING_DIR)/usr/include"
+	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(INJECT_80211_SRC_PATH) $(MAKE_FLAGS) INC_FLAGS="-I$(STAGING_DIR)/usr/include";
 endef
 
 SIDE_CH_CTL_SRC_PATH:=user_space/side_ch_ctl_src
 define Build/Compile/side_ch_ctl
-	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(SIDE_CH_CTL_SRC_PATH) $(MAKE_FLAGS)
+	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(SIDE_CH_CTL_SRC_PATH) $(MAKE_FLAGS);
 endef
 
+# Compile the sdr + selected user space packages
+user_space-$(CONFIG_PACKAGE_sdrctl)+= Build/Compile/sdrctl
+user_space-$(CONFIG_PACKAGE_inject_80211)+= Build/Compile/inject_80211
+user_space-$(CONFIG_PACKAGE_side_ch_ctl)+= Build/Compile/side_ch_ctl
 define Build/Compile
 	$(call Build/Compile/sdr)
-	$(call Build/Compile/sdrctl)
-	$(call Build/Compile/inject_80211)
-	$(call Build/Compile/side_ch_ctl)
+	$(foreach cc,$(user_space-y),$(call $(cc)))
 endef
 
 # Install the uEnv to auto load the bitstream + OS
@@ -191,18 +213,18 @@ endef
 
 define Package/sdrctl/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_DATA) $(OPENWIFI_DIR)/$(SDRCTL_SRC_PATH)/sdrctl $(1)/usr/bin
+	$(INSTALL_BIN) $(OPENWIFI_DIR)/$(SDRCTL_SRC_PATH)/sdrctl $(1)/usr/bin
 endef
 
 define Package/inject_80211/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_DATA) $(OPENWIFI_DIR)/$(INJECT_80211_SRC_PATH)/inject_80211 $(1)/usr/bin
-	$(INSTALL_DATA) $(OPENWIFI_DIR)/$(INJECT_80211_SRC_PATH)/analyze_80211 $(1)/usr/bin
+	$(INSTALL_BIN) $(OPENWIFI_DIR)/$(INJECT_80211_SRC_PATH)/inject_80211 $(1)/usr/bin
+	$(INSTALL_BIN) $(OPENWIFI_DIR)/$(INJECT_80211_SRC_PATH)/analyze_80211 $(1)/usr/bin
 endef
 
 define Package/side_ch_ctl/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_DATA) $(OPENWIFI_DIR)/$(SIDE_CH_CTL_SRC_PATH)/side_ch_ctl $(1)/usr/bin
+	$(INSTALL_BIN) $(OPENWIFI_DIR)/$(SIDE_CH_CTL_SRC_PATH)/side_ch_ctl $(1)/usr/bin
 endef
 
 

@@ -65,7 +65,6 @@ define KernelPackage/ad9361
 	TITLE:=Analog Devices AD9361 ADC driver
 	DEPENDS:=+kmod-cf_axi_adc +kmod-cf_axi_dds
 	FILES:=$(ADI_DIR)/$(iio_adc_subdir)/ad9361_drv.ko
-	AUTOLOAD:=$(call AutoLoad,102,ad9361_drv)
 endef
 adi-$(CONFIG_PACKAGE_kmod-ad9361)+= CONFIG_AD9361=m
 NOSTDINC_FLAGS-$(CONFIG_PACKAGE_kmod-ad9361)+=-DCONFIG_CF_AXI_ADC
@@ -87,7 +86,6 @@ define KernelPackage/cf_axi_adc
 	TITLE:=cf_axi_adc
 	FILES:=$(ADI_DIR)/$(iio_adc_subdir)/cf_axi_adc.ko
 	KCONFIG:=CONFIG_IIO_BUFFER_DMAENGINE=y
-	AUTOLOAD:=$(call AutoLoad,101,cf_axi_adc)
 endef
 adi-$(CONFIG_PACKAGE_kmod-cf_axi_adc)+= CONFIG_CF_AXI_ADC=m
 
@@ -102,7 +100,6 @@ define KernelPackage/cf_axi_dds
 	TITLE:=cf_axi_dds
 	FILES:=$(ADI_DIR)/$(iio_frequency_subdir)/cf_axi_dds_drv.ko
 	KCONFIG:=CONFIG_IIO_BUFFER_DMAENGINE=y
-	AUTOLOAD:=$(call AutoLoad,100,cf_axi_dds_drv)
 endef
 adi-$(CONFIG_PACKAGE_kmod-cf_axi_dds)+= CONFIG_CF_AXI_DDS=m
 

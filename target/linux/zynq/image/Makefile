@@ -57,8 +57,13 @@ endef
 # Use the DTS file provided by OpenWiFi
 define Setup/OpenWiFi
 	ifeq ($(CONFIG_PACKAGE_kmod-openwifi),y)
-		DEVICE_DTS := devicetree
-		DTS_DIR := $(PKG_BUILD_DIR)/openwifi/openwifi/kernel_boot/boards/$$(DEVICE_MODEL)
+		ifeq ($(CONFIG_OPENWIFI_DEFAULT_DTS),y)
+			DEVICE_DTS := devicetree
+			DTS_DIR := $(PKG_BUILD_DIR)/openwifi/openwifi/kernel_boot/boards/$$(DEVICE_MODEL)
+		else
+			DEVICE_DTS := $(CONFIG_OPENWIFI_DTS_FILENAME)
+			DTS_DIR := $(CONFIG_OPENWIFI_DTS_FOLDER)
+		endif
 	endif
 endef
 

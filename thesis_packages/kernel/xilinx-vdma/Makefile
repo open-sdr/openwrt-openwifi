@@ -14,7 +14,6 @@ define KernelPackage/xilinx-vdma
 	TITLE:=Driver for xilinx-vdma
 	KCONFIG:=CONFIG_XILINX_DMA=m
 	FILES:=$(LINUX_DIR)/drivers/dma/xilinx/xilinx_dma.ko
-	AUTOLOAD:=$(call AutoLoad,103,xilinx_dma)
 endef
 
 define Build/Compile
