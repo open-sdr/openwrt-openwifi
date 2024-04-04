@@ -152,9 +152,8 @@ ifneq ($(findstring c,$(OPENWRT_VERBOSE)),)
 endif
 
 KBUILD_EXTRA_SYMBOLS:= \
-	$(KERNEL_BUILD_DIR)/symvers/ad9361.symvers \
 	$(KERNEL_BUILD_DIR)/symvers/mac80211.symvers \
-	$(KERNEL_BUILD_DIR)/symvers/cf_axi_dds.symvers
+	$(KERNEL_BUILD_DIR)/symvers/adi_non-mainline_common.symvers
 
 define Build/Compile/sdr
 	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)/openofdm_tx" CROSS_COMPILE=$(TARGET_CROSS) ARCH=$(ARCH) modules
@@ -170,17 +169,17 @@ endef
 
 SDRCTL_SRC_PATH:=user_space/sdrctl_src
 define Build/Compile/sdrctl
-	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(SDRCTL_SRC_PATH) $(MAKE_FLAGS);
+	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(SDRCTL_SRC_PATH) $(MAKE_FLAGS)
 endef
 
 INJECT_80211_SRC_PATH:=user_space/inject_80211
 define Build/Compile/inject_80211
-	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(INJECT_80211_SRC_PATH) $(MAKE_FLAGS) INC_FLAGS="-I$(STAGING_DIR)/usr/include";
+	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(INJECT_80211_SRC_PATH) $(MAKE_FLAGS) INC_FLAGS="-I$(STAGING_DIR)/usr/include"
 endef
 
 SIDE_CH_CTL_SRC_PATH:=user_space/side_ch_ctl_src
 define Build/Compile/side_ch_ctl
-	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(SIDE_CH_CTL_SRC_PATH) $(MAKE_FLAGS);
+	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(SIDE_CH_CTL_SRC_PATH) $(MAKE_FLAGS)
 endef
 
 # Compile the sdr + selected user space packages
@@ -189,7 +188,9 @@ user_space-$(CONFIG_PACKAGE_inject_80211)+= Build/Compile/inject_80211
 user_space-$(CONFIG_PACKAGE_side_ch_ctl)+= Build/Compile/side_ch_ctl
 define Build/Compile
 	$(call Build/Compile/sdr)
-	$(foreach cc,$(user_space-y),$(call $(cc)))
+	$(foreach cc,$(user_space-y), \
+		$(newline)$(call $(cc)) \
+	)
 endef
 
 # Install the uEnv to auto load the bitstream + OS
