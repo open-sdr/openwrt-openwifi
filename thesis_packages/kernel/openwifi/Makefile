@@ -210,6 +210,12 @@ endef
 define KernelPackage/openwifi/install
 	$(CP) $(OPENWIFI_DIR) $(1)/openwifi
 	$(INSTALL_DATA) ./files/mime.types $(1)/openwifi/user_space/webserver
+
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/openwifi_service $(1)/etc/init.d/openwifi
+
+	$(INSTALL_DIR) $(1)/etc/board.d
+	$(INSTALL_DATA) ./files/openwifi_board $(1)/etc/board.d/01_openwifi
 endef
 
 define Package/sdrctl/install
