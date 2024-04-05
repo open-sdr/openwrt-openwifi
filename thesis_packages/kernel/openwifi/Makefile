@@ -80,7 +80,7 @@ define KernelPackage/openwifi/config
 	select PACKAGE_CFG80211_TESTMODE
 	select ZYNQ_BITSTREAM_BOOTFS
 	if PACKAGE_kmod-openwifi
-		menu "User space programs"
+		menu "OpenWiFi user space programs"
 			config PACKAGE_side_ch_ctl
 				bool "side_ch_ctl tool for OpenWiFi"
 				default y
@@ -91,6 +91,10 @@ define KernelPackage/openwifi/config
 				bool "sdrctl tool for OpenWiFi"
 				default y
 		endmenu
+
+		config PACKAGE_luci
+			bool "(recommended) Use LuCi web interface"
+			default y
 
 		config OPENWIFI_DEFAULT_DTS
 			bool "Let OpenWiFi choose the DTS file"
