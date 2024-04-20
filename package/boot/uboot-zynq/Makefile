@@ -50,12 +50,19 @@ define U-Boot/adrv9361
   BUILD_DEVICES:=analog_devices_zynq-adrv9361
 endef
 
+define U-Boot/pynq-z2
+  NAME :=TUL PYNQ-Z2
+  BUILD_DEVICES:=tul_zynq-pynq-z2
+  UBOOT_CONFIG:=zynq_pynqz2
+endef
+
 UBOOT_TARGETS := \
 	zc702 \
 	zed \
 	zybo \
 	zybo_z7 \
-	adrv9361
+	adrv9361 \
+	pynq-z2
 
 
 define Build/InstallDev

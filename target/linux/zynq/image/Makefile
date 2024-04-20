@@ -109,6 +109,14 @@ define Device/analog_devices_zynq-adrv9361
 endef
 TARGET_DEVICES += analog_devices_zynq-adrv9361
 
+define Device/tul_zynq-pynq-z2
+	$(call Device/FitImageGzip)
+	DEVICE_VENDOR := TUL
+	DEVICE_MODEL := PYNQ-Z2
+	DTS_DIR := ../dts
+endef
+TARGET_DEVICES += tul_zynq-pynq-z2
+
 
 
 $(eval $(call BuildImage))
