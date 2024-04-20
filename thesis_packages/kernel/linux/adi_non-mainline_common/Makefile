@@ -3,10 +3,10 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=adi_non-mainline_common
 PKG_RELEASE:=1
 
-PKG_SOURCE_URL:=https://github.com/analogdevicesinc/linux.git
+PKG_SOURCE_URL:=https://username:password@development.tymeli.be/robbegaeremynck/linux.git
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=adi-5.15.0
-PKG_MIRROR_HASH:=95ca68ae13c0a6e514d36046cfe9218f
+PKG_SOURCE_VERSION:=thesis
+PKG_MIRROR_HASH:=346c39a89098b136c4ec25ac9a15f15776bedcd064b34b5173fc0a2f6321245b
 
 PKG_MAINTAINER:=Robbe Gaeremynck <robbe.gaeremynck@outlook.com>
 

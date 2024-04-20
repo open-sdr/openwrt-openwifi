@@ -21,7 +21,7 @@ OPENWIFI_DIR:=$(PKG_BUILD_DIR)/$(PKG_NAME)
 DRIVER_DIR:=$(OPENWIFI_DIR)/driver
 
 # Directory to the adi_non-mainline_common dependency
-ADI_VERSION:=adi-5.15
+ADI_VERSION:=thesis
 ADI_NAME:=adi_non-mainline_common
 ADI_NON-MAINLINE_DIR:=$(BUILD_DIR)/$(ADI_NAME)-$(ADI_VERSION)
 
