@@ -14,7 +14,8 @@ include $(INCLUDE_DIR)/package.mk
 
 OPENWIFI_BRANCH:=thesis
 OPENWIFI_REVISION:=5c5d825d # Latest known working commit
-OPENWIFI_GITHUB_REPO:=https://username:password@development.tymeli.be/robbegaeremynck/openwifi.git
+OPENWIFI_GITHUB_REPO:= \
+https://username:password@development.tymeli.be/robbegaeremynck/openwifi.git
 OPENWIFI_DIR:=$(PKG_BUILD_DIR)/$(PKG_NAME)
 
 # Openwifi driver path
@@ -122,12 +123,12 @@ endef
 CT_MAKEDEFS:=
 
 # Include preprocessor definitions
-BACKPORTS_VERSION := 5.15.92-1
+BPV := 5.15.92-1
 NOSTDINC_FLAGS := \
 	-I$(incl_fix_path) \
-	-I$(KERNEL_BUILD_DIR)/backports-$(BACKPORTS_VERSION)/include \
-	-include$(KERNEL_BUILD_DIR)/backports-$(BACKPORTS_VERSION)/backport-include/linux/version.h \
-	-include$(KERNEL_BUILD_DIR)/backports-$(BACKPORTS_VERSION)/backport-include/linux/string.h \
+	-I$(KERNEL_BUILD_DIR)/backports-$(BPV)/include \
+	-include$(KERNEL_BUILD_DIR)/backports-$(BPV)/backport-include/linux/version.h \
+	-include$(KERNEL_BUILD_DIR)/backports-$(BPV)/backport-include/linux/string.h \
 	-include$(LINUX_DIR)/include/generated/autoconf.h \
 	-include$(LINUX_DIR)/include/linux/kconfig.h \
 	-include$(LINUX_DIR)/include/net/sock.h \
@@ -137,9 +138,16 @@ ifdef CONFIG_PACKAGE_MAC80211_DEBUGFS
 	NOSTDINC_FLAGS += -DCPTCFG_MAC80211_DEBUGFS
 endif
 
+
+FOSDEM_VIDEO_URL:= \
+https://github.com/open-sdr/openwifi-hw-img/raw/master/openwifi-low-aac.mp4
+
 define Build/Prepare
-	cd $(PKG_BUILD_DIR) && git clone --branch $(OPENWIFI_BRANCH) $(OPENWIFI_GITHUB_REPO) $(PKG_NAME)
-	cd $(OPENWIFI_DIR) && git checkout $(OPENWIFI_REVISION)
+	cd $(PKG_BUILD_DIR) && \
+	git clone --branch $(OPENWIFI_BRANCH) $(OPENWIFI_GITHUB_REPO) $(PKG_NAME)
+
+	cd $(OPENWIFI_DIR) && \
+	git checkout $(OPENWIFI_REVISION)
 
 	mkdir -p $(incl_fix_path)
 	touch $(DRIVER_DIR)/pre_def.h
@@ -148,7 +156,7 @@ define Build/Prepare
 
 	# Download the OpenWiFi webserver video
 	cd $(OPENWIFI_DIR)/user_space/webserver && \
-	wget https://github.com/open-sdr/openwifi-hw-img/raw/master/openwifi-low-aac.mp4
+	wget $(FOSDEM_VIDEO_URL)
 endef
 
 ifneq ($(findstring c,$(OPENWRT_VERBOSE)),)
@@ -159,31 +167,41 @@ KBUILD_EXTRA_SYMBOLS:= \
 	$(KERNEL_BUILD_DIR)/symvers/mac80211.symvers \
 	$(KERNEL_BUILD_DIR)/symvers/adi_non-mainline_common.symvers
 
+FLAGS := \
+	CROSS_COMPILE=$(TARGET_CROSS) ARCH=$(ARCH) \
+	KBUILD_EXTRA_SYMBOLS="$(KBUILD_EXTRA_SYMBOLS)" \
+	NOSTDINC_FLAGS="$(NOSTDINC_FLAGS)"
+
 define Build/Compile/sdr
-	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)/openofdm_tx" CROSS_COMPILE=$(TARGET_CROSS) ARCH=$(ARCH) modules
-	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)/openofdm_rx" CROSS_COMPILE=$(TARGET_CROSS) ARCH=$(ARCH)  modules
-	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)/tx_intf" CROSS_COMPILE=$(TARGET_CROSS) ARCH=$(ARCH)  modules
-	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)/rx_intf" CROSS_COMPILE=$(TARGET_CROSS) ARCH=$(ARCH)  modules
-	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)/xpu" CROSS_COMPILE=$(TARGET_CROSS) ARCH=$(ARCH)  modules
-	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)/side_ch" CROSS_COMPILE=$(TARGET_CROSS) ARCH=$(ARCH) modules
-	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)" CROSS_COMPILE=$(TARGET_CROSS) ARCH=$(ARCH) KBUILD_EXTRA_SYMBOLS="$(KBUILD_EXTRA_SYMBOLS)" NOSTDINC_FLAGS="$(NOSTDINC_FLAGS)" modules
+	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)/openofdm_tx" $(FLAGS) modules
+	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)/openofdm_rx" $(FLAGS) modules
+	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)/tx_intf" $(FLAGS) modules
+	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)/rx_intf" $(FLAGS) modules
+	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)/xpu" $(FLAGS) modules
+	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)/side_ch" $(FLAGS) modules
+	+$(MAKE) -C $(LINUX_DIR) M="$(DRIVER_DIR)" $(FLAGS) modules
 	cp -f $(DRIVER_DIR)/Module.symvers $(PKG_BUILD_DIR)/Module.symvers
 endef
 
-
-SDRCTL_SRC_PATH:=user_space/sdrctl_src
+SDRCTL_P:=user_space/sdrctl_src
 define Build/Compile/sdrctl
-	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(SDRCTL_SRC_PATH) $(MAKE_FLAGS)
+	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) \
+	-C $(OPENWIFI_DIR)/$(SDRCTL_P) \
+	$(MAKE_FLAGS)
 endef
 
-INJECT_80211_SRC_PATH:=user_space/inject_80211
+INJECT_80211_P:=user_space/inject_80211
 define Build/Compile/inject_80211
-	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(INJECT_80211_SRC_PATH) $(MAKE_FLAGS) INC_FLAGS="-I$(STAGING_DIR)/usr/include"
+	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) \
+	-C $(OPENWIFI_DIR)/$(INJECT_80211_P) \
+	$(MAKE_FLAGS) INC_FLAGS="-I$(STAGING_DIR)/usr/include"
 endef
 
-SIDE_CH_CTL_SRC_PATH:=user_space/side_ch_ctl_src
+SIDE_CH_CTL_P:=user_space/side_ch_ctl_src
 define Build/Compile/side_ch_ctl
-	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(OPENWIFI_DIR)/$(SIDE_CH_CTL_SRC_PATH) $(MAKE_FLAGS)
+	+$(MAKE_VARS) $(MAKE) $(PKG_JOBS) \
+	-C $(OPENWIFI_DIR)/$(SIDE_CH_CTL_P) \
+	$(MAKE_FLAGS)
 endef
 
 # Compile the sdr + selected user space packages
@@ -210,7 +228,8 @@ define Build/InstallDev
 	$(CP) -f $(BITSTREAM_PATH) $(STAGING_DIR_IMAGE)/$(BUILD_DEVICE)-system_top.bit
 endef
 
-# Copy the openwifi sources to the board, since user_space scripts necessary to play with the sdr
+# Copy the openwifi sources to the board
+# Since user_space scripts necessary to play with the sdr
 define KernelPackage/openwifi/install
 	$(CP) $(OPENWIFI_DIR) $(1)/openwifi
 	$(INSTALL_DATA) ./files/mime.types $(1)/openwifi/user_space/webserver
@@ -224,18 +243,18 @@ endef
 
 define Package/sdrctl/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(OPENWIFI_DIR)/$(SDRCTL_SRC_PATH)/sdrctl $(1)/usr/bin
+	$(INSTALL_BIN) $(OPENWIFI_DIR)/$(SDRCTL_P)/sdrctl $(1)/usr/bin
 endef
 
 define Package/inject_80211/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(OPENWIFI_DIR)/$(INJECT_80211_SRC_PATH)/inject_80211 $(1)/usr/bin
-	$(INSTALL_BIN) $(OPENWIFI_DIR)/$(INJECT_80211_SRC_PATH)/analyze_80211 $(1)/usr/bin
+	$(INSTALL_BIN) $(OPENWIFI_DIR)/$(INJECT_80211_P)/inject_80211 $(1)/usr/bin
+	$(INSTALL_BIN) $(OPENWIFI_DIR)/$(INJECT_80211_P)/analyze_80211 $(1)/usr/bin
 endef
 
 define Package/side_ch_ctl/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(OPENWIFI_DIR)/$(SIDE_CH_CTL_SRC_PATH)/side_ch_ctl $(1)/usr/bin
+	$(INSTALL_BIN) $(OPENWIFI_DIR)/$(SIDE_CH_CTL_P)/side_ch_ctl $(1)/usr/bin
 endef
 
 
