@@ -16,6 +16,11 @@ OPENWIFI_BRANCH:=thesis
 OPENWIFI_REVISION:=5c5d825d # Latest known working commit
 OPENWIFI_GITHUB_REPO:= \
 https://username:password@development.tymeli.be/robbegaeremynck/openwifi.git
+
+# Link to the repository that hosts all board bitstreams
+OPENWIFI_HW_REVISION:=91c68d6
+OPENWIFI_HW_GITHUB_REPO:=https://github.com/open-sdr/openwifi-hw-img.git
+
 OPENWIFI_DIR:=$(PKG_BUILD_DIR)/$(PKG_NAME)
 
 # Openwifi driver path
@@ -145,9 +150,14 @@ https://github.com/open-sdr/openwifi-hw-img/raw/master/openwifi-low-aac.mp4
 define Build/Prepare
 	cd $(PKG_BUILD_DIR) && \
 	git clone --branch $(OPENWIFI_BRANCH) $(OPENWIFI_GITHUB_REPO) $(PKG_NAME)
-
 	cd $(OPENWIFI_DIR) && \
-	git checkout $(OPENWIFI_REVISION)
+    git checkout $(OPENWIFI_REVISION)
+
+	# Clone the openwifi-hw-img repository to automatically provide all bitstreams
+	cd $(PKG_BUILD_DIR) && \
+	git clone $(OPENWIFI_HW_GITHUB_REPO) openwifi-hw-img
+	cd $(PKG_BUILD_DIR)/openwifi-hw-img && \
+	git checkout $(OPENWIFI_HW_REVISION)
 
 	mkdir -p $(incl_fix_path)
 	touch $(DRIVER_DIR)/pre_def.h
@@ -216,8 +226,14 @@ define Build/Compile
 endef
 
 # Install the uEnv to auto load the bitstream + OS
-BOARD_NAME:=$(lastword $(subst -, ,$(PROFILE)))
-BITSTREAM_PATH:=./files/bitstreams/$(BOARD_NAME)/$(BOARD_NAME)-v3.1.bit
+OPENWRT_BOARD_NAME:=$(lastword $(subst -, ,$(PROFILE)))
+ifeq ($(OPENWRT_BOARD_NAME),adrv9361)
+	OPENWIFI_BOARD_NAME:=adrv9361z7035
+endif
+
+BOARD_DIR:=$(PKG_BUILD_DIR)/openwifi-hw-img/boards/$(OPENWIFI_BOARD_NAME)/sdk
+XSA_PATH:=$(BOARD_DIR)/system_top.xsa
+BITSTREAM_PATH:=$(BOARD_DIR)/system_top.bit
 ifdef !CONFIG_OPENWIFI_DEFAULT_BITSTREAM
 	BITSTREAM_PATH:=OPENWIFI_BITSTREAM_FILE
 endif
@@ -225,6 +241,7 @@ endif
 BUILD_DEVICE:=$(subst DEVICE_,,$(PROFILE))
 define Build/InstallDev
 	$(CP) -f ./files/uEnv-openwifi.txt $(STAGING_DIR_IMAGE)/$(BUILD_DEVICE)-uEnv.txt
+	cd $(BOARD_DIR) && unzip -o $(XSA_PATH)
 	$(CP) -f $(BITSTREAM_PATH) $(STAGING_DIR_IMAGE)/$(BUILD_DEVICE)-system_top.bit
 endef
 
