@@ -100,6 +100,13 @@ define Device/xlnx_zynq-zc702
 endef
 TARGET_DEVICES += xlnx_zynq-zc702
 
+define Device/xlnx_zynq-zc706
+	$(call Device/FitImageGzip)
+	DEVICE_VENDOR := Xilinx
+	DEVICE_MODEL := ZC706
+endef
+TARGET_DEVICES += xlnx_zynq-zc706
+
 define Device/analog_devices_zynq-adrv9361
 	$(call Device/FitImageGzip)
 	DEVICE_VENDOR := Analog Devices
@@ -108,6 +115,51 @@ define Device/analog_devices_zynq-adrv9361
 	$(Setup/OpenWiFi)
 endef
 TARGET_DEVICES += analog_devices_zynq-adrv9361
+
+# For now, we assume only bob, no fmc
+define Device/analog_devices_zynq-adrv9364
+	$(call Device/FitImageGzip)
+	DEVICE_VENDOR := Analog Devices
+	DEVICE_MODEL := adrv9364z7020
+	DTS_DIR := ../dts
+	$(Setup/OpenWiFi)
+endef
+TARGET_DEVICES += analog_devices_zynq-adrv9364
+
+define Device/microphase_antsdr-e200
+	$(call Device/FitImageGzip)
+	DEVICE_VENDOR := MicroPhase
+	DEVICE_MODEL := AntSDR E200
+endef
+TARGET_DEVICES += microphase_antsdr-e200
+
+define Device/microphase_antsdr-e310
+	$(call Device/FitImageGzip)
+	DEVICE_VENDOR := MicroPhase
+	DEVICE_MODEL := AntSDR E310
+endef
+TARGET_DEVICES += microphase_antsdr-e310
+
+define Device/microphase_antsdr-e310v2
+	$(call Device/FitImageGzip)
+	DEVICE_VENDOR := MicroPhase
+	DEVICE_MODEL := AntSDR E310v2
+endef
+TARGET_DEVICES += microphase_antsdr-e310v2
+
+define Device/hexsdr_sdrpi
+	$(call Device/FitImageGzip)
+	DEVICE_VENDOR := HexSDR
+	DEVICE_MODEL := SDRPi
+endef
+TARGET_DEVICES += hexsdr_sdrpi
+
+define Device/hamgeek_neptunesdr
+	$(call Device/FitImageGzip)
+	DEVICE_VENDOR := HamGeek
+	DEVICE_MODEL := NeptuneSDR
+endef
+TARGET_DEVICES += hamgeek_neptunesdr
 
 define Device/tul_zynq-pynq-z2
 	$(call Device/FitImageGzip)
