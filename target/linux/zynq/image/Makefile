@@ -107,11 +107,17 @@ define Device/xlnx_zynq-zc706
 endef
 TARGET_DEVICES += xlnx_zynq-zc706
 
+
+# TODO: Include the zynq-7000.dtsi from the kernel, not the one that we provide
+# DTS_CPPFLAGS for this is already provided, only need to uncomment and remove ./dts/include folder
+# Reason for this fix is, that qspi node is missing in older kernel, see Linux kernel commit 2902c0c
+
 define Device/analog_devices_zynq-adrv9361
 	$(call Device/FitImageGzip)
 	DEVICE_VENDOR := Analog Devices
 	DEVICE_MODEL := adrv9361z7035
 	DTS_DIR := ../dts
+#	DTS_CPPFLAGS := -I$(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/dts
 	$(Setup/OpenWiFi)
 endef
 TARGET_DEVICES += analog_devices_zynq-adrv9361
@@ -122,44 +128,48 @@ define Device/analog_devices_zynq-adrv9364
 	DEVICE_VENDOR := Analog Devices
 	DEVICE_MODEL := adrv9364z7020
 	DTS_DIR := ../dts
+#	DTS_CPPFLAGS := -I$(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/dts
 	$(Setup/OpenWiFi)
 endef
 TARGET_DEVICES += analog_devices_zynq-adrv9364
 
-define Device/microphase_antsdr-e200
+define Device/microphase_zynq-antsdre200
 	$(call Device/FitImageGzip)
 	DEVICE_VENDOR := MicroPhase
 	DEVICE_MODEL := AntSDR E200
+#	DTS_CPPFLAGS := -I$(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/dts
 endef
-TARGET_DEVICES += microphase_antsdr-e200
+TARGET_DEVICES += microphase_zynq-antsdre200
 
-define Device/microphase_antsdr-e310
+define Device/microphase_zynq-antsdre310
 	$(call Device/FitImageGzip)
 	DEVICE_VENDOR := MicroPhase
 	DEVICE_MODEL := AntSDR E310
+#	DTS_CPPFLAGS := -I$(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/dts
 endef
-TARGET_DEVICES += microphase_antsdr-e310
+TARGET_DEVICES += microphase_zynq-antsdre310
 
-define Device/microphase_antsdr-e310v2
+define Device/microphase_zynq-antsdre310v2
 	$(call Device/FitImageGzip)
 	DEVICE_VENDOR := MicroPhase
 	DEVICE_MODEL := AntSDR E310v2
+#	DTS_CPPFLAGS := -I$(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/dts
 endef
-TARGET_DEVICES += microphase_antsdr-e310v2
+TARGET_DEVICES += microphase_zynq-antsdre310v2
 
-define Device/hexsdr_sdrpi
-	$(call Device/FitImageGzip)
-	DEVICE_VENDOR := HexSDR
-	DEVICE_MODEL := SDRPi
-endef
-TARGET_DEVICES += hexsdr_sdrpi
-
-define Device/hamgeek_neptunesdr
-	$(call Device/FitImageGzip)
-	DEVICE_VENDOR := HamGeek
-	DEVICE_MODEL := NeptuneSDR
-endef
-TARGET_DEVICES += hamgeek_neptunesdr
+#define Device/hexsdr_sdrpi
+#	$(call Device/FitImageGzip)
+#	DEVICE_VENDOR := HexSDR
+#	DEVICE_MODEL := SDRPi
+#endef
+#TARGET_DEVICES += hexsdr_sdrpi
+#
+#define Device/hamgeek_neptunesdr
+#	$(call Device/FitImageGzip)
+#	DEVICE_VENDOR := HamGeek
+#	DEVICE_MODEL := NeptuneSDR
+#endef
+#TARGET_DEVICES += hamgeek_neptunesdr
 
 define Device/tul_zynq-pynq-z2
 	$(call Device/FitImageGzip)
