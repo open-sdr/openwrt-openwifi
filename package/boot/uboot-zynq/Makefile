@@ -30,6 +30,11 @@ define U-Boot/zc702
   BUILD_DEVICES:=xlnx_zynq-zc702
 endef
 
+define U-Boot/zc706
+  NAME:=Xilinx ZC706 Dev Board
+  BUILD_DEVICES:=xlnx_zynq-zc706
+endef
+
 define U-Boot/zed
   NAME:=Avnet Digilent ZedBoard Dev Board
   BUILD_DEVICES:=avnet_zynq-zed
@@ -50,6 +55,36 @@ define U-Boot/adrv9361
   BUILD_DEVICES:=analog_devices_zynq-adrv9361
 endef
 
+define U-Boot/adrv9364
+  NAME :=Analog Devices adrv9364z7020
+  BUILD_DEVICES:=analog_devices_zynq-adrv9364
+endef
+
+define U-Boot/antsdr_e200
+  NAME :=MicroPhase AntSDR E200
+  BUILD_DEVICES:=microphase_antsdr-e200
+endef
+
+define U-Boot/antsdr_e310
+  NAME :=MicroPhase AntSDR E310
+  BUILD_DEVICES:=microphase_antsdr-e310
+endef
+
+define U-Boot/antsdr_e310v2
+  NAME :=MicroPhase AntSDR E310v2
+  BUILD_DEVICES:=microphase_antsdr-e310v2
+endef
+
+define U-Boot/sdrpi
+  NAME :=HexSDR SDRPi
+  BUILD_DEVICES:=hexsdr_sdrpi
+endef
+
+define U-Boot/neptunesdr
+  NAME :=HamGeek NeptuneSDR
+  BUILD_DEVICES:=hamgeek_neptunesdr
+endef
+
 define U-Boot/pynq-z2
   NAME :=TUL PYNQ-Z2
   BUILD_DEVICES:=tul_zynq-pynq-z2
@@ -58,10 +93,17 @@ endef
 
 UBOOT_TARGETS := \
 	zc702 \
+	zc706 \
 	zed \
 	zybo \
 	zybo_z7 \
 	adrv9361 \
+	adrv9364 \
+	antsdr_e200 \
+	antsdr_e310 \
+	antsdr_e310v2 \
+	sdrpi \
+	neptunesdr \
 	pynq-z2
 
 
