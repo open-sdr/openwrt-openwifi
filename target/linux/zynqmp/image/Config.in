@@ -1,0 +1,4 @@
+config ZYNQ_BITSTREAM_BOOTFS
+    bool "Copy bitstream to boot partition"
+    default n
+    depends on TARGET_zynq
