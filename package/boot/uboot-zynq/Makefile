@@ -60,19 +60,19 @@ define U-Boot/adrv9364
   BUILD_DEVICES:=analog_devices_zynq-adrv9364
 endef
 
-define U-Boot/antsdr_e200
+define U-Boot/antsdre200
   NAME :=MicroPhase AntSDR E200
-  BUILD_DEVICES:=microphase_antsdr-e200
+  BUILD_DEVICES:=microphase_zynq-antsdre200
 endef
 
-define U-Boot/antsdr_e310
+define U-Boot/antsdre310
   NAME :=MicroPhase AntSDR E310
-  BUILD_DEVICES:=microphase_antsdr-e310
+  BUILD_DEVICES:=microphase_zynq-antsdre310
 endef
 
-define U-Boot/antsdr_e310v2
+define U-Boot/antsdre310v2
   NAME :=MicroPhase AntSDR E310v2
-  BUILD_DEVICES:=microphase_antsdr-e310v2
+  BUILD_DEVICES:=microphase_zynq-antsdre310v2
 endef
 
 define U-Boot/sdrpi
@@ -99,9 +99,9 @@ UBOOT_TARGETS := \
 	zybo_z7 \
 	adrv9361 \
 	adrv9364 \
-	antsdr_e200 \
-	antsdr_e310 \
-	antsdr_e310v2 \
+	antsdre200 \
+	antsdre310 \
+	antsdre310v2 \
 	sdrpi \
 	neptunesdr \
 	pynq-z2
