@@ -38,10 +38,20 @@ UBOOT_TARGETS := \
 	zcu102-rev1.1
 
 UBOOT_CUSTOMIZE_CONFIG := \
-	--disable TOOLS_MKEFICAPSULE
+	--disable TOOLS_MKEFICAPSULE ; \
+	setval CONFIG_PMUFW_INIT_FILE "$(STAGING_DIR_IMAGE)/pmufw.bin" ; \
+	setval CONFIG_ZYNQMP_SPL_PM_CFG_OBJ_FILE "$(STAGING_DIR_IMAGE)/$(BUILD_DEVICES)-pm_cfg_obj.bin"
 
 UBOOT_MAKE_FLAGS += \
 	BL31=$(STAGING_DIR_IMAGE)/bl31_zynqmp-$(ATF).bin
+
+# Generate pm_cfg_obj.bin
+# TODO: remove the hardcode of zcu102 in path to pm_cfg_obj.c
+define Build/Configure
+	$(call Build/Configure/U-Boot)
+	python3 $(PKG_BUILD_DIR)/tools/zynqmp_pm_cfg_obj_convert.py "./files/zcu102/pm_cfg_obj.c" "$(STAGING_DIR_IMAGE)/$(BUILD_DEVICES)-pm_cfg_obj.bin"
+endef
+
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(STAGING_DIR_IMAGE)
