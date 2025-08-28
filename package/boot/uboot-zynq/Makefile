@@ -7,9 +7,8 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_VERSION:=2019.07
-
-PKG_HASH:=bff4fa77e8da17521c030ca4c5b947a056c1b1be4d3e6ee8637020b8d50251d0
+PKG_VERSION:=2025.07
+PKG_HASH:=0f933f6c5a426895bf306e93e6ac53c60870e4b54cda56d95211bec99e63bec7
 
 include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/u-boot.mk
@@ -20,7 +19,8 @@ define U-Boot/Default
   BUILD_TARGET:=zynq
   BUILD_SUBTARGET:=generic
   UBOOT_IMAGE:=spl/boot.bin u-boot.img
-  UBOOT_CONFIG:=zynq_$(1)
+  UBOOT_CONFIG:=xilinx_zynq_virt
+  DEVICE_TREE:=zynq-$(1)
   UENV:=default
   HIDDEN:=1
 endef
@@ -106,6 +106,8 @@ UBOOT_TARGETS := \
 	neptunesdr \
 	pynq-z2
 
+UBOOT_CUSTOMIZE_CONFIG := \
+	--disable TOOLS_MKEFICAPSULE
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(STAGING_DIR_IMAGE)
