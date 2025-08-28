@@ -12,7 +12,7 @@ define Build/zynqmp-sdcard
 	rm -f $@.boot
 	mkfs.fat $@.boot -C $(FAT32_BLOCKS)
 	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.bin ::boot.bin
-	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-u-boot.img ::u-boot.img
+	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-u-boot.itb ::u-boot.itb
 	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-uEnv.txt ::uEnv.txt
 	$(if $(CONFIG_ZYNQ_BITSTREAM_BOOTFS), \
 		mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-system_top.bit ::system_top.bit \
@@ -49,11 +49,11 @@ endef
 # Devices
 #################################################
 
-define Device/xlnx_zynqmp-zcu102-rev1.0
+define Device/xlnx_zynqmp-zcu102-rev1.1
 	$(call Device/FitImageGzip)
 	DEVICE_VENDOR := Xilinx
-	DEVICE_MODEL := ZCU102 Rev1.0
+	DEVICE_MODEL := ZCU102 Rev1.1
 endef
-TARGET_DEVICES += xlnx_zynqmp-zcu102-rev1.0
+TARGET_DEVICES += xlnx_zynqmp-zcu102-rev1.1
 
 $(eval $(call BuildImage))
