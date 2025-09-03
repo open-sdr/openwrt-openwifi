@@ -36,7 +36,7 @@ define Trusted-Firmware-A/zynqmp
 	NAME:=ZynqMP
 	PLAT:=zynqmp
 endef
-#	TFA_MAKE_FLAGS+=cadence0
+TFA_MAKE_FLAGS:=ZYNQMP_CONSOLE=cadence0 bl31
 
 TFA_TARGETS:= \
 	zynqmp
