@@ -33,7 +33,7 @@ endef
 define Device/Default
 	PROFILES := Default
 	DEVICE_DTS := $(lastword $(subst _, ,$(1)))
-	KERNEL_DEPENDS = $$(wildcard $(DTS_DIR)/$$(DEVICE_DTS).dts)
+	KERNEL_DEPENDS = $$(wildcard $(DTS_DIR)/xilinx/$$(DEVICE_DTS).dts)
 	KERNEL_LOADADDR := 0x8000
 	IMAGES := sdcard.img.gz
 	IMAGE/sdcard.img.gz := zynqmp-sdcard | gzip
@@ -49,11 +49,12 @@ endef
 # Devices
 #################################################
 
-define Device/xlnx_zynqmp-zcu102-rev1.1
+define Device/xlnx_zynqmp-zcu102
 	$(call Device/FitImageGzip)
 	DEVICE_VENDOR := Xilinx
 	DEVICE_MODEL := ZCU102 Rev1.1
+	DEVICE_DTS := zynqmp-zcu102-rev1.0
 endef
-TARGET_DEVICES += xlnx_zynqmp-zcu102-rev1.1
+TARGET_DEVICES += xlnx_zynqmp-zcu102
 
 $(eval $(call BuildImage))
