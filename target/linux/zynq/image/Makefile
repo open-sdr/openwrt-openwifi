@@ -17,9 +17,9 @@ define Build/zynq-sdcard
 	mkfs.fat $@.boot -C $(FAT32_BLOCKS)
 	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.bin ::boot.bin
 	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-u-boot.img ::u-boot.img
-	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-uEnv.txt ::uEnv.txt
+	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.scr ::boot.scr
 	$(if $(CONFIG_ZYNQ_BITSTREAM_BOOTFS), \
-		mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-system_top.bit ::system_top.bit \
+		mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-system_top.bit ::openwifi_bitstream.bit \
 		,)
 	mcopy -i $@.boot $(IMAGE_KERNEL) ::fit.itb
 	./gen_zynq_sdcard_img.sh $@ \
@@ -50,22 +50,6 @@ define Device/FitImageGzip
 	KERNEL_NAME := Image
 endef
 
-#################################################
-# Package specific DTS
-#################################################
-
-# Use the DTS file provided by OpenWiFi
-define Setup/OpenWiFi
-	ifeq ($(CONFIG_PACKAGE_kmod-openwifi),y)
-		ifeq ($(CONFIG_OPENWIFI_DEFAULT_DTS),y)
-			DEVICE_DTS := devicetree
-			DTS_DIR := $(PKG_BUILD_DIR)/openwifi/openwifi/kernel_boot/boards/$$(DEVICE_MODEL)
-		else
-			DEVICE_DTS := $(CONFIG_OPENWIFI_DTS_FILENAME)
-			DTS_DIR := $(CONFIG_OPENWIFI_DTS_FOLDER)
-		endif
-	endif
-endef
 
 #################################################
 # Devices
