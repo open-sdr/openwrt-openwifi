@@ -20,7 +20,7 @@ define U-Boot/Default
   BUILD_SUBTARGET:=generic
   UBOOT_IMAGE:=spl/boot.bin u-boot.img
   UBOOT_CONFIG:=xilinx_zynq_virt
-  DEVICE_TREE:=zynq-$(1)
+  DEVICE_TREE:="zynq-$(1)"
   UENV:=default
   HIDDEN:=1
 endef
@@ -109,8 +109,9 @@ UBOOT_TARGETS := \
 UBOOT_CUSTOMIZE_CONFIG := \
 	--disable TOOLS_MKEFICAPSULE
 
-UBOOT_CONFIGURE_VARS := DEVICE_TREE="zynq-antsdre200"
-UBOOT_MAKE_FLAGS := DEVICE_TREE="zynq-antsdre200"
+DTS_NAME=$(lastword $(subst _, ,$(BUILD_DEVICES)))
+UBOOT_CONFIGURE_VARS = DEVICE_TREE="$(DTS_NAME)"
+UBOOT_MAKE_FLAGS = DEVICE_TREE="$(DTS_NAME)"
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(STAGING_DIR_IMAGE)
