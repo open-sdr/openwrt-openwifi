@@ -24,6 +24,9 @@ define Build/zynq-sdcard
 	$(if $(CONFIG_ZYNQ_BITSTREAM_BOOTFS), \
 		mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-system_top.bit ::bitstream.bit \
 		,)
+	$(if $(CONFIG_HAS_OVERLAYS_BOOTFS), \
+		mcopy -i $@.boot $(STAGING_DIR_IMAGE)/overlays ::overlays \
+		,)
 	mcopy -i $@.boot $(IMAGE_KERNEL) ::fit.itb
 	./gen_zynq_sdcard_img.sh $@ \
 		$@.boot \
