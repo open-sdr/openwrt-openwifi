@@ -104,6 +104,7 @@ define Device/analog_devices_zynq-adrv9361
 	DEVICE_VENDOR := Analog Devices
 	DEVICE_MODEL := adrv9361z7035
 	DTS_DIR := ../dts
+	DEVICE_DTS_FLAGS += -@
 #	DTS_CPPFLAGS := -I$(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/dts
 endef
 TARGET_DEVICES += analog_devices_zynq-adrv9361
