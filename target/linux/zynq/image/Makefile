@@ -39,6 +39,7 @@ endef
 
 define Device/Default
 	PROFILES := Default
+	DEVICE_DTC_FLAGS := -@
 	DTS_DIR := $(DTS_DIR)/xilinx
 	DEVICE_DTS := $(lastword $(subst _, ,$(1)))
 	KERNEL_DEPENDS = $$(wildcard $(DTS_DIR)/$$(DEVICE_DTS).dts)
@@ -104,7 +105,6 @@ define Device/analog_devices_zynq-adrv9361
 	DEVICE_VENDOR := Analog Devices
 	DEVICE_MODEL := adrv9361z7035
 	DTS_DIR := ../dts
-	DEVICE_DTS_FLAGS += -@
 #	DTS_CPPFLAGS := -I$(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/dts
 endef
 TARGET_DEVICES += analog_devices_zynq-adrv9361
