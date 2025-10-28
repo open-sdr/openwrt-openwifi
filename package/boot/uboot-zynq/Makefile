@@ -118,8 +118,8 @@ define Build/InstallDev
 	$(CP) $(PKG_BUILD_DIR)/spl/boot.bin $(STAGING_DIR_IMAGE)/$(BUILD_DEVICES)-boot.bin
 	$(CP) $(PKG_BUILD_DIR)/u-boot.img $(STAGING_DIR_IMAGE)/$(BUILD_DEVICES)-u-boot.img
 
-	# Compile boot command
-	mkimage -A arm -T script -C none -d ./files/boot.cmd $(STAGING_DIR_IMAGE)/$(BUILD_DEVICES)-boot.scr
+	# Install boot command
+	$(CP) ./files/boot.cmd $(STAGING_DIR_IMAGE)/$(BUILD_DEVICES)-boot.cmd
 endef
 
 define Package/u-boot/install/default

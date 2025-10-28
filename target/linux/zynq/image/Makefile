@@ -13,6 +13,9 @@ ifdef CONFIG_PACKAGE_kmod-openwifi
 endif
 
 define Build/zynq-sdcard
+	# Compile boot command
+	mkimage -A arm -T script -C none -d $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.cmd $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.scr
+
 	rm -f $@.boot
 	mkfs.fat $@.boot -C $(FAT32_BLOCKS)
 	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.bin ::boot.bin
