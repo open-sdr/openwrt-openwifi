@@ -105,7 +105,6 @@ define Device/analog_devices_zynq-adrv9361
 	DEVICE_MODEL := adrv9361z7035
 	DTS_DIR := ../dts
 #	DTS_CPPFLAGS := -I$(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/dts
-	$(Setup/OpenWiFi)
 endef
 TARGET_DEVICES += analog_devices_zynq-adrv9361
 
@@ -116,7 +115,6 @@ define Device/analog_devices_zynq-adrv9364
 	DEVICE_MODEL := adrv9364z7020
 	DTS_DIR := ../dts
 #	DTS_CPPFLAGS := -I$(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/dts
-	$(Setup/OpenWiFi)
 endef
 TARGET_DEVICES += analog_devices_zynq-adrv9364
 
