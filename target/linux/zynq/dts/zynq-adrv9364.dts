@@ -10,7 +10,7 @@
 
 / {
 	model = "Analog Devices ADRV9364-Z7020 (Z7020/AD9364)";
-	compatible = "adi,adrv9361", "xlnx,zynq-7000";
+	compatible = "adi,adrv9364", "xlnx,zynq-7000";
 
 	aliases {
 		ethernet0 = &gem0;
@@ -40,8 +40,8 @@
 	phy-mode = "rgmii-id";
 	phy-handle = <&ethernet_phy>;
 
-	ethernet_phy: ethernet-phy@7 {
-		reg = <7>;
+	ethernet_phy: ethernet-phy@0 {
+		reg = <0>;
 	};
 };
 
