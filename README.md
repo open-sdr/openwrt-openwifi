@@ -1,3 +1,39 @@
+# OpenWrt fork for openwifi
+## Additions to OpenWrt
+(To see a detailed overview, use a tool to compare origin with working tree)
+### Added support for Zynq based boards:
+- adrv9361
+- adrv9364
+- antsdre200
+- antsdre310
+- antsdre310v2
+- sdrpi (to be tested)
+- neptunesdr (to be tested)
+- pynq-z2 (in itself not openwifi capable but extension boards exist)
+
+### Added support for ZynqMP, including the following baords:
+- zcu102
+
+
+### Overview
+| path | function |
+|------|----------|
+| package/boot/arm-trusted-firmware-zynqmp | Build bl31.bin |
+| package/boot/uboot-zynq | Version bump and board support |
+| package/boot/uboot-zynqmp | New, required for zcu102 |
+| target/linux/zynq | Board support |
+| target/linux/zynqmp | New, required for zcu102 |
+
+
+## Openwifi packages feed
+Since forking requires maintenance, to the highest extend possible, changes are confined to the openwrt-openwifi-packages-feed repository. OpenWrt requires this packages feed in order for it to build openwifi.
+
+The openwifi packages feed is listed as the top entry in feeds.conf.default.
+
+
+## Default OpenWrt information
+
+
 ![OpenWrt logo](include/logo.png)
 
 OpenWrt Project is a Linux operating system targeting embedded devices. Instead
