@@ -63,7 +63,9 @@ define Build/InstallDev
 	$(INSTALL_DIR) $(STAGING_DIR_IMAGE)
 	$(CP) $(PKG_BUILD_DIR)/spl/boot.bin $(STAGING_DIR_IMAGE)/$(BUILD_DEVICES)-boot.bin
 	$(CP) $(PKG_BUILD_DIR)/u-boot.itb $(STAGING_DIR_IMAGE)/$(BUILD_DEVICES)-u-boot.itb
-	$(CP) ./files/uEnv-$(UENV).txt $(STAGING_DIR_IMAGE)/$(BUILD_DEVICES)-uEnv.txt
+
+	# Install boot command
+	$(CP) ./files/boot.cmd $(STAGING_DIR_IMAGE)/$(BUILD_DEVICES)-boot.cmd
 endef
 
 define Package/u-boot/install/default

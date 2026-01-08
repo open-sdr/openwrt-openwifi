@@ -9,11 +9,14 @@ FAT32_BLOCK_SIZE=1024
 FAT32_BLOCKS=$(shell echo $$(($(CONFIG_TARGET_KERNEL_PARTSIZE)*1024*1024/$(FAT32_BLOCK_SIZE))))
 
 define Build/zynqmp-sdcard
+	# Compile boot command
+	mkimage -A arm -T script -C none -d $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.cmd $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.scr
+
 	rm -f $@.boot
 	mkfs.fat $@.boot -C $(FAT32_BLOCKS)
 	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.bin ::boot.bin
 	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-u-boot.itb ::u-boot.itb
-	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-uEnv.txt ::uEnv.txt
+	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.scr ::boot.scr
 	$(if $(CONFIG_ZYNQ_BITSTREAM_BOOTFS), \
 		mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-system_top.bit ::system_top.bit \
 		,)
