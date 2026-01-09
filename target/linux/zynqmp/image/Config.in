@@ -1,4 +1,9 @@
-config ZYNQ_BITSTREAM_BOOTFS
+config ZYNQMP_BITSTREAM_BOOTFS
     bool "Copy bitstream to boot partition"
     default n
-    depends on TARGET_zynq
+    depends on TARGET_zynqmp
+
+config HAS_OVERLAYS_BOOTFS
+    bool "Target has overlays for the boot partition"
+    default n
+    depends on TARGET_zynqmp
