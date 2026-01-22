@@ -5,10 +5,7 @@
 board_config_update
 
 case "$(board_name)" in
-avnet,zynq-zed | \
-digilent,zynq-zybo | \
-digilent,zynq-zybo-z7 | \
-xlnx,zynq-zc702)
+xlnx,zynqmp-zcu102)
 	ucidef_set_interface_lan 'eth0'
 	;;
 *)
