@@ -22,7 +22,7 @@ define Build/zynq-sdcard
 	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-u-boot.img ::u-boot.img
 	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.scr ::boot.scr
 	$(if $(CONFIG_ZYNQ_BITSTREAM_BOOTFS), \
-		mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-system_top.bit ::bitstream.bit \
+		mcopy -i $@.boot $(STAGING_DIR_IMAGE)/system_top.bit ::bitstream.bit \
 		,)
 	$(if $(CONFIG_HAS_OVERLAYS_BOOTFS), \
 		mcopy -i $@.boot $(STAGING_DIR_IMAGE)/overlays ::overlays \

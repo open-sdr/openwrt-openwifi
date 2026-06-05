@@ -23,6 +23,7 @@ define U-Boot/Default
   DEVICE_TREE:="zynq-$(1)"
   UENV:=default
   HIDDEN:=1
+  DEPENDS+=+PACKAGE_kmod-openwifi:openwifi-hw-img
 endef
 
 define U-Boot/zc702
@@ -112,6 +113,13 @@ UBOOT_CUSTOMIZE_CONFIG := \
 DTS_NAME=$(lastword $(subst _, ,$(BUILD_DEVICES)))
 UBOOT_CONFIGURE_VARS = DEVICE_TREE="$(DTS_NAME)"
 UBOOT_MAKE_FLAGS = DEVICE_TREE="$(DTS_NAME)"
+
+define Build/Configure
+	$(call Build/Configure/U-Boot)
+	$(PKG_BUILD_DIR)/scripts/config --file $(PKG_BUILD_DIR)/.config --disable TOOLS_MKEFICAPSULE
+	$(PKG_BUILD_DIR)/scripts/config --file $(PKG_BUILD_DIR)/.config --set-str CONFIG_XILINX_PS_INIT_FILE $(STAGING_DIR)/openwifi-hw-img/ps7_init_gpl.c
+	+$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR) $(UBOOT_CONFIGURE_VARS) oldconfig
+endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(STAGING_DIR_IMAGE)
