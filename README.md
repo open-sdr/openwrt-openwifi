@@ -11,7 +11,7 @@
 - neptunesdr (to be tested)
 - pynq-z2 (in itself not openwifi capable but extension boards exist)
 
-### Added support for ZynqMP, including the following baords:
+### Added support for ZynqMP, including the following boards:
 - zcu102
 
 
