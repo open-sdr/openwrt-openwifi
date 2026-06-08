@@ -29,6 +29,7 @@ define U-Boot/Default
   	+pmufw
   UENV:=default
   HIDDEN:=1
+  DEPENDS+=+PACKAGE_kmod-openwifi:openwifi-hw-img
 endef
 
 define U-Boot/zcu102
@@ -52,6 +53,7 @@ define Build/Configure
 	$(PKG_BUILD_DIR)/scripts/config --file $(PKG_BUILD_DIR)/.config --disable TOOLS_MKEFICAPSULE
 	$(PKG_BUILD_DIR)/scripts/config --file $(PKG_BUILD_DIR)/.config --set-str CONFIG_PMUFW_INIT_FILE $(STAGING_DIR_IMAGE)/pmufw.bin
 	$(PKG_BUILD_DIR)/scripts/config --file $(PKG_BUILD_DIR)/.config --set-str CONFIG_ZYNQMP_SPL_PM_CFG_OBJ_FILE $(STAGING_DIR_IMAGE)/pm_cfg_obj.bin
+	$(PKG_BUILD_DIR)/scripts/config --file $(PKG_BUILD_DIR)/.config --set-str CONFIG_XILINX_PS_INIT_FILE $(STAGING_DIR)/openwifi-hw-img/psu_init_gpl.c
 	+$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR) $(UBOOT_CONFIGURE_VARS) oldconfig
 
 	mkdir -p $(STAGING_DIR_IMAGE)
