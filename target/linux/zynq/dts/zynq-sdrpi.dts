@@ -1,0 +1,40 @@
+/dts-v1/;
+#include "zynq-7000.dtsi"
+
+/ {
+	model = "HexSDR sdrpi (7z020+ad9361 SDR smart platform with GPSTCXO and RF AP)";
+
+	memory {
+		device_type = "memory";
+		reg = <0x0 0x40000000>;
+	};
+
+	chosen {
+		bootargs = "earlyprintk";
+		linux,stdout-path = &uart1;
+		stdout-path = &uart1;
+	};
+};
+
+&gem0 {
+	status = "okay";
+	phy-mode = "rgmii-id";
+	phy-handle = <&ethernet_phy>;
+
+	ethernet_phy: ethernet-phy@0 {
+		reg = <0>;
+	};
+};
+
+&sdhci0 {
+	status = "okay";
+};
+
+&uart1 {
+	status = "okay";
+};
+
+&usb0 {
+	status = "okay";
+	dr_mode = "host";
+};
