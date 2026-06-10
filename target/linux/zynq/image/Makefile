@@ -144,19 +144,23 @@ define Device/microphase_zynq-antsdre310v2
 endef
 TARGET_DEVICES += microphase_zynq-antsdre310v2
 
-#define Device/hexsdr_sdrpi
-#	$(call Device/FitImageGzip)
-#	DEVICE_VENDOR := HexSDR
-#	DEVICE_MODEL := SDRPi
-#endef
-#TARGET_DEVICES += hexsdr_sdrpi
-#
-#define Device/hamgeek_neptunesdr
-#	$(call Device/FitImageGzip)
-#	DEVICE_VENDOR := HamGeek
-#	DEVICE_MODEL := NeptuneSDR
-#endef
-#TARGET_DEVICES += hamgeek_neptunesdr
+define Device/hexsdr_zynq-sdrpi
+	$(call Device/FitImageGzip)
+	DEVICE_VENDOR := HexSDR
+	DEVICE_MODEL := SDRPi
+	DTS_DIR := ../dts
+	DTS_CPPFLAGS := -I$(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/dts/xilinx
+endef
+TARGET_DEVICES += hexsdr_zynq-sdrpi
+
+define Device/hamgeek_zynq-neptunesdr
+	$(call Device/FitImageGzip)
+	DEVICE_VENDOR := HamGeek
+	DEVICE_MODEL := NeptuneSDR
+	DTS_DIR := ../dts
+	DTS_CPPFLAGS := -I$(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/dts/xilinx
+endef
+TARGET_DEVICES += hamgeek_zynq-neptunesdr
 
 define Device/tul_zynq-pynq-z2
 	$(call Device/FitImageGzip)
