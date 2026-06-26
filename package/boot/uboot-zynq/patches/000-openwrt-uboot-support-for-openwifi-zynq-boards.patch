@@ -7,7 +7,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
 --- a/arch/arm/dts/Makefile	(revision 6d41f0a39d6423c8e57e92ebbe9f8c0333a63f72)
-+++ b/arch/arm/dts/Makefile	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
++++ b/arch/arm/dts/Makefile	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
 @@ -236,6 +236,7 @@
  	zynq-microzed.dtb \
  	zynq-minized.dtb \
@@ -16,7 +16,7 @@ diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
  	zynq-syzygy-hub.dtb \
  	zynq-topic-miami.dtb \
  	zynq-topic-miamilite.dtb \
-@@ -251,7 +252,12 @@
+@@ -251,7 +252,14 @@
  	zynq-zturn.dtb \
  	zynq-zturn-v5.dtb \
  	zynq-zybo.dtb \
@@ -26,7 +26,9 @@ diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
 +	zynq-adrv9364.dtb \
 +	zynq-antsdre200.dtb \
 +	zynq-antsdre310.dtb \
-+	zynq-antsdre310v2.dtb
++	zynq-antsdre310v2.dtb \
++	zynq-neptunesdr.dtb \
++	zynq-sdrpi.dtb
  dtb-$(CONFIG_ARCH_ZYNQMP) += \
  	avnet-ultra96-rev1.dtb			\
  	zynqmp-a2197-revA.dtb			\
@@ -37,8 +39,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-adrv9361.dts b/arch/arm/dts/zynq-adrv9361.dts
 new file mode 100644
---- /dev/null	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
-+++ b/arch/arm/dts/zynq-adrv9361.dts	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
+--- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
++++ b/arch/arm/dts/zynq-adrv9361.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
 @@ -0,0 +1,101 @@
 +/*
 + * Analog Devices Inc. ADRV9361-Z7035 board DTS
@@ -149,8 +151,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-adrv9364.dts b/arch/arm/dts/zynq-adrv9364.dts
 new file mode 100644
---- /dev/null	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
-+++ b/arch/arm/dts/zynq-adrv9364.dts	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
+--- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
++++ b/arch/arm/dts/zynq-adrv9364.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
 @@ -0,0 +1,101 @@
 +/*
 + * Analog Devices Inc. ADRV9364-Z7020 board DTS
@@ -260,8 +262,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-antsdre200.dts b/arch/arm/dts/zynq-antsdre200.dts
 new file mode 100644
---- /dev/null	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
-+++ b/arch/arm/dts/zynq-antsdre200.dts	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
+--- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
++++ b/arch/arm/dts/zynq-antsdre200.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
 @@ -0,0 +1,104 @@
 +/*
 + * MicroPhase Inc. ANTSDR board DTS
@@ -375,8 +377,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-antsdre310.dts b/arch/arm/dts/zynq-antsdre310.dts
 new file mode 100644
---- /dev/null	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
-+++ b/arch/arm/dts/zynq-antsdre310.dts	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
+--- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
++++ b/arch/arm/dts/zynq-antsdre310.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
 @@ -0,0 +1,110 @@
 +/*
 + * MicroPhase Inc. ANTSDR board DTS
@@ -495,8 +497,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-antsdre310v2.dts b/arch/arm/dts/zynq-antsdre310v2.dts
 new file mode 100644
---- /dev/null	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
-+++ b/arch/arm/dts/zynq-antsdre310v2.dts	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
+--- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
++++ b/arch/arm/dts/zynq-antsdre310v2.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
 @@ -0,0 +1,109 @@
 +/*
 + * MicroPhase Inc. ANTSDR board DTS
@@ -608,6 +610,57 @@ new file mode 100644
 +
 +};
 \ No newline at end of file
+Index: arch/arm/dts/zynq-neptunesdr.dts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/arch/arm/dts/zynq-neptunesdr.dts b/arch/arm/dts/zynq-neptunesdr.dts
+new file mode 100644
+--- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
++++ b/arch/arm/dts/zynq-neptunesdr.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
+@@ -0,0 +1,40 @@
++/dts-v1/;
++#include "zynq-7000.dtsi"
++
++/ {
++	model = "neptunesdr";
++
++	memory {
++		device_type = "memory";
++		reg = <0x0 0x20000000>;
++	};
++
++	chosen {
++		bootargs = "earlyprintk";
++		linux,stdout-path = &uart1;
++		stdout-path = &uart1;
++	};
++};
++
++&gem0 {
++	status = "okay";
++	phy-mode = "rgmii-id";
++	phy-handle = <&ethernet_phy>;
++
++	ethernet_phy: ethernet-phy@0 {
++		reg = <0>;
++	};
++};
++
++&sdhci0 {
++	status = "okay";
++};
++
++&uart1 {
++	status = "okay";
++};
++
++&usb0 {
++	status = "okay";
++	dr_mode = "host";
++};
+\ No newline at end of file
 Index: arch/arm/dts/zynq-pynq-z2.dts
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
@@ -615,8 +668,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-pynq-z2.dts b/arch/arm/dts/zynq-pynq-z2.dts
 new file mode 100644
---- /dev/null	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
-+++ b/arch/arm/dts/zynq-pynq-z2.dts	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
+--- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
++++ b/arch/arm/dts/zynq-pynq-z2.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
 @@ -0,0 +1,68 @@
 +/*
 + * TUL Pynq-Z2 board DTS
@@ -686,6 +739,57 @@ new file mode 100644
 +	dr_mode = "host";
 +	usb-phy = <&usb_phy0>;
 +};
+Index: arch/arm/dts/zynq-sdrpi.dts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/arch/arm/dts/zynq-sdrpi.dts b/arch/arm/dts/zynq-sdrpi.dts
+new file mode 100644
+--- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
++++ b/arch/arm/dts/zynq-sdrpi.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
+@@ -0,0 +1,40 @@
++/dts-v1/;
++#include "zynq-7000.dtsi"
++
++/ {
++	model = "HexSDR sdrpi (7z020+ad9361 SDR smart platform with GPSTCXO and RF AP)";
++
++	memory {
++		device_type = "memory";
++		reg = <0x0 0x40000000>;
++	};
++
++	chosen {
++		bootargs = "earlyprintk";
++		linux,stdout-path = &uart1;
++		stdout-path = &uart1;
++	};
++};
++
++&gem0 {
++	status = "okay";
++	phy-mode = "rgmii-id";
++	phy-handle = <&ethernet_phy>;
++
++	ethernet_phy: ethernet-phy@0 {
++		reg = <0>;
++	};
++};
++
++&sdhci0 {
++	status = "okay";
++};
++
++&uart1 {
++	status = "okay";
++};
++
++&usb0 {
++	status = "okay";
++	dr_mode = "host";
++};
+\ No newline at end of file
 Index: board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.c
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
@@ -693,8 +797,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.c b/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.c
 new file mode 100644
---- /dev/null	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
-+++ b/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.c	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
+--- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
++++ b/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.c	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
 @@ -0,0 +1,12755 @@
 +/******************************************************************************
 +* (c) Copyright 2010-2014 Xilinx, Inc. All rights reserved.
@@ -13458,8 +13562,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.h b/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.h
 new file mode 100644
---- /dev/null	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
-+++ b/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.h	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
+--- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
++++ b/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.h	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
 @@ -0,0 +1,135 @@
 +/******************************************************************************
 +*
@@ -13603,7 +13707,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/configs/xilinx_zynq_virt_defconfig b/configs/xilinx_zynq_virt_defconfig
 --- a/configs/xilinx_zynq_virt_defconfig	(revision 6d41f0a39d6423c8e57e92ebbe9f8c0333a63f72)
-+++ b/configs/xilinx_zynq_virt_defconfig	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
++++ b/configs/xilinx_zynq_virt_defconfig	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
 @@ -85,7 +85,7 @@
  CONFIG_CMD_MTDPARTS_SHOW_NET_SIZES=y
  CONFIG_CMD_UBI=y
@@ -13620,8 +13724,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/include/configs/zynq_pynqz2.h b/include/configs/zynq_pynqz2.h
 new file mode 100644
---- /dev/null	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
-+++ b/include/configs/zynq_pynqz2.h	(revision de7317abc2b5c0a7649293b00daf4bdb15b4391c)
+--- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
++++ b/include/configs/zynq_pynqz2.h	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
 @@ -0,0 +1,11 @@
 +#ifndef __CONFIG_ZYNQ_PYNQZ2_H
 +#define __CONFIG_ZYNQ_PYNQZ2_H
