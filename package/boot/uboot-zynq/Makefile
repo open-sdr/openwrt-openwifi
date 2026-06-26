@@ -78,12 +78,12 @@ endef
 
 define U-Boot/sdrpi
   NAME :=HexSDR SDRPi
-  BUILD_DEVICES:=hexsdr_sdrpi
+  BUILD_DEVICES:=hexsdr_zynq-sdrpi
 endef
 
 define U-Boot/neptunesdr
   NAME :=HamGeek NeptuneSDR
-  BUILD_DEVICES:=hamgeek_neptunesdr
+  BUILD_DEVICES:=hamgeek_zynq-neptunesdr
 endef
 
 define U-Boot/pynq-z2
