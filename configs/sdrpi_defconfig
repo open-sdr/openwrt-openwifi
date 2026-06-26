@@ -2983,7 +2983,7 @@ CONFIG_PACKAGE_MAC80211_MESH=y
 # CONFIG_PACKAGE_kmod-mwifiex-sdio is not set
 # CONFIG_PACKAGE_kmod-mwl8k is not set
 CONFIG_PACKAGE_kmod-openwifi=y
-CONFIG_OPENWIFI_BOARD_NAME=""
+CONFIG_OPENWIFI_BOARD_NAME="sdrpi"
 
 #
 # OpenWiFi user space programs
