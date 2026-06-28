@@ -7,7 +7,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
 --- a/arch/arm/dts/Makefile	(revision 6d41f0a39d6423c8e57e92ebbe9f8c0333a63f72)
-+++ b/arch/arm/dts/Makefile	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
++++ b/arch/arm/dts/Makefile	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
 @@ -236,6 +236,7 @@
  	zynq-microzed.dtb \
  	zynq-minized.dtb \
@@ -39,8 +39,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-adrv9361.dts b/arch/arm/dts/zynq-adrv9361.dts
 new file mode 100644
---- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
-+++ b/arch/arm/dts/zynq-adrv9361.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
+--- /dev/null	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
++++ b/arch/arm/dts/zynq-adrv9361.dts	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
 @@ -0,0 +1,101 @@
 +/*
 + * Analog Devices Inc. ADRV9361-Z7035 board DTS
@@ -151,8 +151,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-adrv9364.dts b/arch/arm/dts/zynq-adrv9364.dts
 new file mode 100644
---- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
-+++ b/arch/arm/dts/zynq-adrv9364.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
+--- /dev/null	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
++++ b/arch/arm/dts/zynq-adrv9364.dts	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
 @@ -0,0 +1,101 @@
 +/*
 + * Analog Devices Inc. ADRV9364-Z7020 board DTS
@@ -262,8 +262,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-antsdre200.dts b/arch/arm/dts/zynq-antsdre200.dts
 new file mode 100644
---- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
-+++ b/arch/arm/dts/zynq-antsdre200.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
+--- /dev/null	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
++++ b/arch/arm/dts/zynq-antsdre200.dts	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
 @@ -0,0 +1,104 @@
 +/*
 + * MicroPhase Inc. ANTSDR board DTS
@@ -377,8 +377,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-antsdre310.dts b/arch/arm/dts/zynq-antsdre310.dts
 new file mode 100644
---- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
-+++ b/arch/arm/dts/zynq-antsdre310.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
+--- /dev/null	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
++++ b/arch/arm/dts/zynq-antsdre310.dts	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
 @@ -0,0 +1,110 @@
 +/*
 + * MicroPhase Inc. ANTSDR board DTS
@@ -497,8 +497,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-antsdre310v2.dts b/arch/arm/dts/zynq-antsdre310v2.dts
 new file mode 100644
---- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
-+++ b/arch/arm/dts/zynq-antsdre310v2.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
+--- /dev/null	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
++++ b/arch/arm/dts/zynq-antsdre310v2.dts	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
 @@ -0,0 +1,109 @@
 +/*
 + * MicroPhase Inc. ANTSDR board DTS
@@ -617,8 +617,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-neptunesdr.dts b/arch/arm/dts/zynq-neptunesdr.dts
 new file mode 100644
---- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
-+++ b/arch/arm/dts/zynq-neptunesdr.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
+--- /dev/null	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
++++ b/arch/arm/dts/zynq-neptunesdr.dts	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
 @@ -0,0 +1,40 @@
 +/dts-v1/;
 +#include "zynq-7000.dtsi"
@@ -668,8 +668,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-pynq-z2.dts b/arch/arm/dts/zynq-pynq-z2.dts
 new file mode 100644
---- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
-+++ b/arch/arm/dts/zynq-pynq-z2.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
+--- /dev/null	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
++++ b/arch/arm/dts/zynq-pynq-z2.dts	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
 @@ -0,0 +1,68 @@
 +/*
 + * TUL Pynq-Z2 board DTS
@@ -746,8 +746,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/arch/arm/dts/zynq-sdrpi.dts b/arch/arm/dts/zynq-sdrpi.dts
 new file mode 100644
---- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
-+++ b/arch/arm/dts/zynq-sdrpi.dts	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
+--- /dev/null	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
++++ b/arch/arm/dts/zynq-sdrpi.dts	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
 @@ -0,0 +1,40 @@
 +/dts-v1/;
 +#include "zynq-7000.dtsi"
@@ -797,8 +797,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.c b/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.c
 new file mode 100644
---- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
-+++ b/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.c	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
+--- /dev/null	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
++++ b/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.c	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
 @@ -0,0 +1,12755 @@
 +/******************************************************************************
 +* (c) Copyright 2010-2014 Xilinx, Inc. All rights reserved.
@@ -13562,8 +13562,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.h b/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.h
 new file mode 100644
---- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
-+++ b/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.h	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
+--- /dev/null	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
++++ b/board/xilinx/zynq/zynq-pynq-z2/ps7_init_gpl.h	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
 @@ -0,0 +1,135 @@
 +/******************************************************************************
 +*
@@ -13707,13 +13707,13 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/configs/xilinx_zynq_virt_defconfig b/configs/xilinx_zynq_virt_defconfig
 --- a/configs/xilinx_zynq_virt_defconfig	(revision 6d41f0a39d6423c8e57e92ebbe9f8c0333a63f72)
-+++ b/configs/xilinx_zynq_virt_defconfig	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
++++ b/configs/xilinx_zynq_virt_defconfig	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
 @@ -85,7 +85,7 @@
  CONFIG_CMD_MTDPARTS_SHOW_NET_SIZES=y
  CONFIG_CMD_UBI=y
  CONFIG_OF_BOARD=y
 -CONFIG_OF_LIST="zynq-zc702 zynq-zc706 zynq-zc770-xm010 zynq-zc770-xm011 zynq-zc770-xm011-x16 zynq-zc770-xm012 zynq-zc770-xm013 zynq-cc108 zynq-microzed zynq-minized zynq-picozed zynq-zed zynq-zturn zynq-zturn-v5 zynq-zybo zynq-zybo-z7 zynq-dlc20-rev1.0"
-+CONFIG_OF_LIST="zynq-zc702 zynq-zc706 zynq-zc770-xm010 zynq-zc770-xm011 zynq-zc770-xm011-x16 zynq-zc770-xm012 zynq-zc770-xm013 zynq-cc108 zynq-microzed zynq-minized zynq-picozed zynq-zed zynq-zturn zynq-zturn-v5 zynq-zybo zynq-zybo-z7 zynq-dlc20-rev1.0 zynq-antsdre200 zynq-antsdre310 zynq-antsdre310v2 zynq-adrv9361 zynq-adrv9364 zynq-pynq-z2"
++CONFIG_OF_LIST="zynq-zc702 zynq-zc706 zynq-zc770-xm010 zynq-zc770-xm011 zynq-zc770-xm011-x16 zynq-zc770-xm012 zynq-zc770-xm013 zynq-cc108 zynq-microzed zynq-minized zynq-picozed zynq-zed zynq-zturn zynq-zturn-v5 zynq-zybo zynq-zybo-z7 zynq-dlc20-rev1.0 zynq-antsdre200 zynq-antsdre310 zynq-antsdre310v2 zynq-adrv9361 zynq-adrv9364 zynq-sdrpi zynq-neptunesdr zynq-pynq-z2"
  CONFIG_ENV_IS_NOWHERE=y
  CONFIG_ENV_IS_IN_FAT=y
  CONFIG_ENV_IS_IN_NAND=y
@@ -13724,8 +13724,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/include/configs/zynq_pynqz2.h b/include/configs/zynq_pynqz2.h
 new file mode 100644
---- /dev/null	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
-+++ b/include/configs/zynq_pynqz2.h	(revision b5cf8d5d3fc446e4e56a1e3637f527cc4c5343b7)
+--- /dev/null	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
++++ b/include/configs/zynq_pynqz2.h	(revision 9bd2af7769e8af356ef088c8f33601190b3efebf)
 @@ -0,0 +1,11 @@
 +#ifndef __CONFIG_ZYNQ_PYNQZ2_H
 +#define __CONFIG_ZYNQ_PYNQZ2_H
