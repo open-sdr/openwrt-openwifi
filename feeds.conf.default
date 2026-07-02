@@ -1,3 +1,5 @@
+src-git openwifi https://github.com/open-sdr/openwrt-openwifi-packages-feed.git^46cb4078f2f738fdecc5f3bb4c9b0550e1ffd418
+
 src-git packages https://git.openwrt.org/feed/packages.git^5caa62e0bc9f7fb9b0c12a23267bceb7724214dd
 src-git luci https://git.openwrt.org/project/luci.git^128a7812f4be233c5dd7f7466f534fd888785caf
 src-git routing https://git.openwrt.org/feed/routing.git^3d7d0dc7fa43d3eb09498417407e95a6552e5312
