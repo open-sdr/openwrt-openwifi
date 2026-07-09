@@ -1,14 +1,57 @@
 Subject: [PATCH] staging: fclk: Enable pl clock with sysfs entry for set_rate
 ---
+Index: Documentation/devicetree/bindings/clock/xlnx,fclk.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Documentation/devicetree/bindings/clock/xlnx,fclk.yaml b/Documentation/devicetree/bindings/clock/xlnx,fclk.yaml
+new file mode 100644
+--- /dev/null	(revision 2aad4db65b68532992f8ed292ffd10c3a3a12bd6)
++++ b/Documentation/devicetree/bindings/clock/xlnx,fclk.yaml	(revision 2aad4db65b68532992f8ed292ffd10c3a3a12bd6)
+@@ -0,0 +1,33 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/xlnx,fclk.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Xilinx PL clocks
++
++maintainers:
++  - Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
++
++description:
++  The clock consumer driver used for handle clocks between PS/PL but also
++  provide a way to control clock from System Controller to DUT.
++
++properties:
++  compatible:
++    const: xlnx,fclk
++
++  clocks:
++    maxItems: 1
++
++required:
++  - clocks
++
++additionalProperties: false
++
++examples:
++  -
++    clk {
++      compatible = "xlnx,fclk";
++      clocks = <&clkc 71>;
++    };
 Index: drivers/staging/Kconfig
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
 diff --git a/drivers/staging/Kconfig b/drivers/staging/Kconfig
---- a/drivers/staging/Kconfig	(revision ffc253263a1375a65fa6c9f62a893e9767fbebfa)
-+++ b/drivers/staging/Kconfig	(revision 5130db930fc6b5d1499f5c6df4e54332dc99bc13)
-@@ -78,4 +78,6 @@
+--- a/drivers/staging/Kconfig	(revision 519d8ae2f3ef6ed7c1af010cb43c4dbfd3207a8d)
++++ b/drivers/staging/Kconfig	(revision 2aad4db65b68532992f8ed292ffd10c3a3a12bd6)
+@@ -64,4 +64,6 @@
 
  source "drivers/staging/vme_user/Kconfig"
 
@@ -21,12 +64,12 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
 diff --git a/drivers/staging/Makefile b/drivers/staging/Makefile
---- a/drivers/staging/Makefile	(revision ffc253263a1375a65fa6c9f62a893e9767fbebfa)
-+++ b/drivers/staging/Makefile	(revision 5130db930fc6b5d1499f5c6df4e54332dc99bc13)
-@@ -28,3 +28,4 @@
+--- a/drivers/staging/Makefile	(revision 519d8ae2f3ef6ed7c1af010cb43c4dbfd3207a8d)
++++ b/drivers/staging/Makefile	(revision 2aad4db65b68532992f8ed292ffd10c3a3a12bd6)
+@@ -21,3 +21,4 @@
+ obj-$(CONFIG_BCM2835_VCHIQ)	+= vc04_services/
  obj-$(CONFIG_XIL_AXIS_FIFO)	+= axis-fifo/
  obj-$(CONFIG_FIELDBUS_DEV)     += fieldbus/
- obj-$(CONFIG_QLGE)		+= qlge/
 +obj-$(CONFIG_XILINX_FCLK)	+= fclk/
 Index: drivers/staging/fclk/Kconfig
 IDEA additional info:
@@ -35,8 +78,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/drivers/staging/fclk/Kconfig b/drivers/staging/fclk/Kconfig
 new file mode 100644
---- /dev/null	(revision 5130db930fc6b5d1499f5c6df4e54332dc99bc13)
-+++ b/drivers/staging/fclk/Kconfig	(revision 5130db930fc6b5d1499f5c6df4e54332dc99bc13)
+--- /dev/null	(revision 2aad4db65b68532992f8ed292ffd10c3a3a12bd6)
++++ b/drivers/staging/fclk/Kconfig	(revision 2aad4db65b68532992f8ed292ffd10c3a3a12bd6)
 @@ -0,0 +1,9 @@
 +#
 +# Xilinx PL clk enabler
@@ -54,8 +97,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/drivers/staging/fclk/Makefile b/drivers/staging/fclk/Makefile
 new file mode 100644
---- /dev/null	(revision 5130db930fc6b5d1499f5c6df4e54332dc99bc13)
-+++ b/drivers/staging/fclk/Makefile	(revision 5130db930fc6b5d1499f5c6df4e54332dc99bc13)
+--- /dev/null	(revision 2aad4db65b68532992f8ed292ffd10c3a3a12bd6)
++++ b/drivers/staging/fclk/Makefile	(revision 2aad4db65b68532992f8ed292ffd10c3a3a12bd6)
 @@ -0,0 +1,1 @@
 +obj-$(CONFIG_XILINX_FCLK)	+= xilinx_fclk.o
 Index: drivers/staging/fclk/TODO
@@ -65,37 +108,11 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/drivers/staging/fclk/TODO b/drivers/staging/fclk/TODO
 new file mode 100644
---- /dev/null	(revision 5130db930fc6b5d1499f5c6df4e54332dc99bc13)
-+++ b/drivers/staging/fclk/TODO	(revision 5130db930fc6b5d1499f5c6df4e54332dc99bc13)
+--- /dev/null	(revision 2aad4db65b68532992f8ed292ffd10c3a3a12bd6)
++++ b/drivers/staging/fclk/TODO	(revision 2aad4db65b68532992f8ed292ffd10c3a3a12bd6)
 @@ -0,0 +1,2 @@
 +TODO:
 +	- Remove this hack and clock adapt all the drivers.
-Index: drivers/staging/fclk/dt-binding.txt
-IDEA additional info:
-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
-<+>UTF-8
-===================================================================
-diff --git a/drivers/staging/fclk/dt-binding.txt b/drivers/staging/fclk/dt-binding.txt
-new file mode 100644
---- /dev/null	(revision 5130db930fc6b5d1499f5c6df4e54332dc99bc13)
-+++ b/drivers/staging/fclk/dt-binding.txt	(revision 5130db930fc6b5d1499f5c6df4e54332dc99bc13)
-@@ -0,0 +1,16 @@
-+Binding for Xilinx pl clocks
-+
-+This binding uses the common clock binding[1].
-+
-+[1] Documentation/devicetree/bindings/clock/clock-bindings.txt
-+
-+Required properties:
-+ - compatible: Must be 'xlnx,fclk'
-+ - clocks: Handle to input clock
-+
-+Example:
-+	fclk3: fclk3 {
-+		status = "disabled";
-+		compatible = "xlnx,fclk";
-+		clocks = <&clkc 71>;
-+	};
 Index: drivers/staging/fclk/xilinx_fclk.c
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
@@ -103,9 +120,9 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/drivers/staging/fclk/xilinx_fclk.c b/drivers/staging/fclk/xilinx_fclk.c
 new file mode 100644
---- /dev/null	(revision 5130db930fc6b5d1499f5c6df4e54332dc99bc13)
-+++ b/drivers/staging/fclk/xilinx_fclk.c	(revision 5130db930fc6b5d1499f5c6df4e54332dc99bc13)
-@@ -0,0 +1,115 @@
+--- /dev/null	(revision 2aad4db65b68532992f8ed292ffd10c3a3a12bd6)
++++ b/drivers/staging/fclk/xilinx_fclk.c	(revision 2aad4db65b68532992f8ed292ffd10c3a3a12bd6)
+@@ -0,0 +1,114 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Xilinx fclk clock driver.
@@ -199,12 +216,11 @@ new file mode 100644
 +	return 0;
 +}
 +
-+static int fclk_remove(struct platform_device *pdev)
++static void fclk_remove(struct platform_device *pdev)
 +{
 +	struct fclk_state *st = platform_get_drvdata(pdev);
 +
 +	clk_disable_unprepare(st->pl);
-+	return 0;
 +}
 +
 +static struct platform_driver fclk_driver = {
